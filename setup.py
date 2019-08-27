@@ -9,6 +9,7 @@ setup(name='State of the Universe',
                         'numpy',
                         'scipy',
                         'matplotlib',
-                        'requests'],
+                        'requests',
+                        'pyephem'],
       packages=['stateoftheuniverse'],
       zip_safe=False)
