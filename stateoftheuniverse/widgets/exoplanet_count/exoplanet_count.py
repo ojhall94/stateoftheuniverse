@@ -6,8 +6,9 @@ Get the current number of exoplanets (grouped by different categories).
 # IMPORTS
 # -----------------------------------------------------------------------------
 
-from collections import Counter
+import astropy.units as u
 
+from collections import Counter
 from astroquery.nasa_exoplanet_archive import NasaExoplanetArchive
 
 
@@ -15,9 +16,8 @@ from astroquery.nasa_exoplanet_archive import NasaExoplanetArchive
 # FUNCTION DEFINITIONS
 # -----------------------------------------------------------------------------
 
-def get_exoplanet_class(mass: float,
-                        radius: float,
-                        units: str = 'Jupiter') -> str:
+def get_exoplanet_class(mass: u.Quantity,
+                        radius: u.Quantity) -> str:
     """
     (Approximately) classify an exoplanet based on its mass and radius.
 
@@ -26,14 +26,8 @@ def get_exoplanet_class(mass: float,
             amassclassificationforbothsolarandextrasolarplanets
 
     Args:
-        mass: The mass of the exoplanet, in units of `unit` (i.e., if
-            `unit` is set to "Jupiter", the mass is assumed to be in
-            Jupiter masses).
-        radius: The radius of the exoplanet, in units of `unit` (i.e.,
-            if `unit` is set to "Jupiter", the radius is assumed to be
-            in Jupiter radii).
-        units: The unit system used for the `mass` and the `radius`.
-            Needs to be either "Earth" or "Jupiter".
+        mass: The mass of the exoplanet as a astropy.units.Quantity.
+        radius: The radius of the exoplanet as a astropy.units.Quantity.
 
     Returns:
         The approximate planet class, which is one of the following:
@@ -41,17 +35,11 @@ def get_exoplanet_class(mass: float,
              "Superterran", "Neptunian", "Jovian", "N/A", "Other"]
     """
 
-    # Convert from Jupiter units to Earth units, if necessary
-    if units == 'Jupiter':
-        mass *= 317.907
-        radius *= 11.2089
-    elif units == 'Earth':
-        pass
-    else:
-        raise ValueError(f'Invalid value for units: {units}. Needs to be '
-                         f'either "Earth" or "Jupiter"!')
+    # Convert mass and radius to Earth units and cast to float
+    mass = mass.to(u.earthMass).to_value()
+    radius = radius.to(u.earthRad).to_value()
 
-    # Classify the planet based on its mass and radius (in Earth units)
+    # Classify the planet based on its mass and radius
     if (mass == 0) or (radius == 0):
         return 'N/A'
     elif (0 < mass <= 0.00001) and (0 < radius <= 0.03):
@@ -111,11 +99,17 @@ def get_exoplanet_count(by_method: bool = True,
         # Initialize the sub-dictionary that will hold the counts per class
         exoplanet_count['by_class'] = dict()
 
+        # Loop over all confirmed exoplanets and classify them individually
         for i in range(len(confirmed_exoplanets)):
 
-            # Get the mass and radius of the planet and classify it
+            # Get the mass and radius and cast to a astropy.units.Quantity
+            # Note: The NASA Exoplanet Archive returns values in Jupiter units
             mass = float(str(confirmed_exoplanets[i]['pl_bmassj']).split()[0])
+            mass = u.Quantity(mass, u.jupiterMass)
             radius = float(str(confirmed_exoplanets[i]['pl_radj']).split()[0])
+            radius = u.Quantity(radius, u.jupiterRad)
+
+            # Classify the exoplanet based on these values
             planet_class = get_exoplanet_class(mass=mass, radius=radius)
 
             # Increase the count for the planet class
