@@ -13,6 +13,7 @@ setup(name='stateoftheuniverse',
                         'matplotlib',
                         'requests',
                         'SPARQLWrapper',
-                        'astroplan'],
+                        'astroplan',
+                        'pyephem'],
       packages=['stateoftheuniverse'],
       zip_safe=False)
