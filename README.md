@@ -4,4 +4,7 @@ An Astro Hack Week 2019 project
 
 
 **Important decisions**:
+
 We're using the Google docstring conventions.
+
+Our time metric should consistently be `datetime.datetime`
