@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='State of the Universe',
+setup(name='stateoftheuniverse',
       version='0.0',
       description='Generate an overview of the current state of the Universe!',
       url='https://github.com/ojhall94/stateoftheuniverse',
