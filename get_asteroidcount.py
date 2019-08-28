@@ -1,7 +1,8 @@
 from astroquery.mpc import MPC
 
-def get_NEA_count(hazard: bool = True,
+def get_NEA(hazard: bool = True,
                         large: bool = True) -> dict:
+
     """
     Get the current total number of near-Earth asteroids from the IAU
     Minor Planet Center. Additionally, get the number of asteroids that
@@ -16,6 +17,7 @@ def get_NEA_count(hazard: bool = True,
         A dictionary with keys `{"hazard", "large", "total"}`
         which holds the respective count of asteroids.
     """
+
     asteroid_count = dict()
 
     # Get all potentially hazardous asteroids from MPC
@@ -26,7 +28,7 @@ def get_NEA_count(hazard: bool = True,
     NEA_1km = len(MPC.query_objects('asteroid', pha=0, km_neo=1))
     asteroid_count['large'] = NEA_1km
 
-    # Get non-potentially hazardous asteroids smaller than 1 km from MPC
+# Get non-potentially hazardous asteroids smaller than 1 km from MPC
     neos = [MPC.query_objects('asteroid', pha=0, km_neo=0, neo=1, orbit_type=orbtype) for orbtype in range(10)]
     NEA_count = sum(len(neo) for neo in neos)
     asteroid_count['total'] = NEA_count
