@@ -15,5 +15,6 @@ setup(name='stateoftheuniverse',
                         'SPARQLWrapper',
                         'astroplan',
                         'pyephem'],
+      test_requires=['pytest'],
       packages=['stateoftheuniverse'],
       zip_safe=False)
