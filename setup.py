@@ -11,5 +11,6 @@ setup(name='State of the Universe',
                         'matplotlib',
                         'requests',
                         'pyephem'],
+      test_requires=['pytest'],
       packages=['stateoftheuniverse'],
       zip_safe=False)
