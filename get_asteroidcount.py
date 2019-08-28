@@ -1,7 +1,18 @@
 from astroquery.mpc import MPC
 
-def get_NEA(hazard: bool = True,
-                        large: bool = True) -> dict:
+class AsteroidWidget():
+
+    def __init(self,
+             longitude: Optional[float] = None,
+             latitude: Optional[float] = None,
+             datetime: Optional[dt] = None):
+
+        super().__init__(longitude=longitude,
+                         latitude=latitude,
+                         datetime=datetime)
+
+    def get_data(self, hazard: bool = True,
+                    large: bool = True) -> dict:
 
     """
     Get the current total number of near-Earth asteroids from the IAU
@@ -16,8 +27,6 @@ def get_NEA(hazard: bool = True,
     Returns:
         A dictionary with keys `{"hazard", "large", "total"}`
         which holds the respective count of asteroids.
-
-        Arbitrary change.
     """
 
     asteroid_count = dict()
@@ -35,10 +44,14 @@ def get_NEA(hazard: bool = True,
     NEA_count = sum(len(neo) for neo in neos)
     asteroid_count['total'] = NEA_count
 
-    print("We have discovered", asteroid_count['total'], "asteroids.")
+    self.data = asteroid_count
 
-    if large:
-        print("Of those, there are", asteroid_count['large'], "near-Earth asteroids larger than 1 km wide.")
+    def get_string(self):
 
-    if hazard:
-        print("Currently, there are", asteroid_count['hazard'], "near-Earth asteroids that are classified as potentially hazardous.")
+        print("We have discovered", asteroid_count['total'], "asteroids.")
+
+        if large:
+            print("Of those, there are", asteroid_count['large'], "near-Earth asteroids larger than 1 km wide.")
+
+        if hazard:
+            print("Currently, there are", asteroid_count['hazard'], "near-Earth asteroids that are classified as potentially hazardous.")
