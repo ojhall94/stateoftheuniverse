@@ -10,6 +10,8 @@ from astropy.time import Time
 import matplotlib.pyplot as plt
 from astropy.coordinates import get_moon, get_sun
 import datetime
+import warnings
+warnings.filterwarnings('ignore')
 
 def get_moon_illumination(time: datetime) -> float:
     """ A function to return the moon illumination
@@ -34,6 +36,7 @@ def get_moon_state(time: datetime) -> bool:
     if opposite > 360.:
         opposite -= 360.
 
+    #Moon goes for west to east
     #Find whether waxing or waning
     if sunra > 180:
         if (moonra > sunra) or (moonra < opposite):
@@ -50,7 +53,7 @@ def get_moon_state(time: datetime) -> bool:
 def get_moon_phase(time: datetime) -> str:
     """ Code to get moon phase"""
     illumination = get_moon_illumination(time)
-    waxing = get_moon_illumination(time)
+    waxing = get_moon_state(time)
 
     if  illumination <= 0.1:
         phase = 'New Moon'
@@ -75,6 +78,6 @@ def get_moon_phase(time: datetime) -> str:
     return phase
 
 if __name__ == "__main__":
-    time = datetime.datetime.now()
-    print('{} %'.format(get_moon_illumination(time)))
+    time = Time(datetime.datetime.now())
+    print('{:.2f} %'.format(get_moon_illumination(time)))
     print('Our current phase is: {}'.format(get_moon_phase(time)))
