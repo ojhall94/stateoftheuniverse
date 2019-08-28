@@ -8,12 +8,16 @@ Get the current number of exoplanets (grouped by different categories).
 
 import astropy.units as u
 
-from collections import Counter
 from astroquery.nasa_exoplanet_archive import NasaExoplanetArchive
+from collections import Counter
+from datetime import datetime as dt
+from typing import Optional
+
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 
 
 # -----------------------------------------------------------------------------
-# FUNCTION DEFINITIONS
+# AUXILIARY FUNCTION DEFINITIONS
 # -----------------------------------------------------------------------------
 
 def get_exoplanet_class(mass: u.Quantity,
@@ -60,62 +64,118 @@ def get_exoplanet_class(mass: u.Quantity,
         return 'Other'
 
 
-def get_exoplanet_count(by_method: bool = True,
-                        by_class: bool = True) -> dict:
-    """
-    Get the current total number of confirmed exoplanets from the NASA
-    Exoplanet Archive. Additionally, also get the number of exoplanets
-    grouped by detection method or by planet class (if desired).
+# -----------------------------------------------------------------------------
+# CLASS DEFINITIONS
+# -----------------------------------------------------------------------------
 
-    Args:
-        by_method: Whether or not to also return the exoplanet count
-            grouped by detection method.
-        by_class: Whether or not to also return the exoplanet count
-            grouped by (approximate) planet class.
+class ExoplanetCount(WidgetPrototype):
 
-    Returns:
-        A dictionary with keys `{"total", "by_method", "by_class"}`
-        which holds the respective count of exoplanets.
-    """
+    def __init__(self,
+                 longitude: Optional[float] = None,
+                 latitude: Optional[float] = None,
+                 datetime: Optional[dt] = None):
 
-    # Instantiate the dictionary that will hold the results
-    exoplanet_count = dict()
+        super().__init__(longitude=longitude,
+                         latitude=latitude,
+                         datetime=datetime)
 
-    # Get the confirmed exoplanets form the NASA Exoplanet Archive
-    confirmed_exoplanets = NasaExoplanetArchive.get_confirmed_planets_table()
+    def get_data(self,
+                 by_method: bool = True,
+                 by_class: bool = True):
+        """
+        Get the current total number of confirmed exoplanets from the
+        NASA Exoplanet Archive. Additionally, also get the number of
+        exoplanets grouped by detection method or by planet class (if
+        desired).
 
-    # Get the total count of all confirmed planets
-    exoplanet_count['total'] = len(confirmed_exoplanets)
+        Args:
+            by_method: Whether or not to also return the exoplanet count
+                grouped by detection method.
+            by_class: Whether or not to also return the exoplanet count
+                grouped by (approximate) planet class.
 
-    # Get count by detection method
-    if by_method:
-        exoplanet_count['by_method'] = \
-            dict(Counter(list(confirmed_exoplanets['pl_discmethod'])))
+        Returns:
+            A dictionary with keys `{"total", "by_method", "by_class"}`
+            which holds the respective count of exoplanets.
+        """
 
-    # Get count by planet class (by looping over all confirmed exoplanets and
-    # classifying each of them based on their respective mass and radius)
-    if by_class:
+        # Instantiate the dictionary that will hold the results
+        exoplanet_count = dict()
 
-        # Initialize the sub-dictionary that will hold the counts per class
-        exoplanet_count['by_class'] = dict()
+        # Get the confirmed exoplanets form the NASA Exoplanet Archive
+        confirmed_exoplanets = \
+            NasaExoplanetArchive.get_confirmed_planets_table()
+    
+        # Get the total count of all confirmed planets
+        exoplanet_count['total'] = len(confirmed_exoplanets)
+    
+        # Get count by detection method
+        if by_method:
+            exoplanet_count['by_method'] = \
+                dict(Counter(list(confirmed_exoplanets['pl_discmethod'])))
+    
+        # Get count by planet class (by looping over all confirmed exoplanets
+        # and classifying each of them based on its respective mass and radius)
+        if by_class:
+        
+            # Initialize the sub-dictionary that will hold the counts per class
+            exoplanet_count['by_class'] = dict()
+        
+            # Loop over all confirmed exoplanets and classify them individually
+            for i in range(len(confirmed_exoplanets)):
+            
+                # Get the mass and radius and cast to a astropy.units.Quantity
+                # Note: The NASA Exoplanet Archive usually returns values in
+                #       Jupiter units.
+                mass = float(
+                    str(confirmed_exoplanets[i]['pl_bmassj']).split()[0])
+                mass = u.Quantity(mass, u.jupiterMass)
+                radius = float(
+                    str(confirmed_exoplanets[i]['pl_radj']).split()[0])
+                radius = u.Quantity(radius, u.jupiterRad)
+            
+                # Classify the exoplanet based on these values
+                planet_class = get_exoplanet_class(mass=mass, radius=radius)
+            
+                # Increase the count for the planet class
+                if planet_class in exoplanet_count['by_class'].keys():
+                    exoplanet_count['by_class'][planet_class] += 1
+                else:
+                    exoplanet_count['by_class'][planet_class] = 1
 
-        # Loop over all confirmed exoplanets and classify them individually
-        for i in range(len(confirmed_exoplanets)):
+        # Store away the data retrieved by this method
+        self.data = exoplanet_count
 
-            # Get the mass and radius and cast to a astropy.units.Quantity
-            # Note: The NASA Exoplanet Archive returns values in Jupiter units
-            mass = float(str(confirmed_exoplanets[i]['pl_bmassj']).split()[0])
-            mass = u.Quantity(mass, u.jupiterMass)
-            radius = float(str(confirmed_exoplanets[i]['pl_radj']).split()[0])
-            radius = u.Quantity(radius, u.jupiterRad)
+    def get_string(self):
 
-            # Classify the exoplanet based on these values
-            planet_class = get_exoplanet_class(mass=mass, radius=radius)
+        # Get the maximum key and value length for aligning the output
+        max_key_length = max(max(map(len, self.data['by_method'].keys())),
+                             max(map(len, self.data['by_class'].keys()))) + 3
+        max_val_length = max(map(lambda x: len(str(x)),
+                                 self.data['by_method'].values()))
 
-            # Increase the count for the planet class
-            if planet_class in exoplanet_count['by_class'].keys():
-                exoplanet_count['by_class'][planet_class] += 1
-            else:
-                exoplanet_count['by_class'][planet_class] = 1
+        # Construct the lines of the output
+        lines = \
+            ['', 80 * '-',
+             'NUMBER OF CONFIRMED EXOPLANETS'.center(80), 80 * '-', '',
+             f'{"Total number:":<{max_key_length}}{self.data["total"]}', '']
 
-    return exoplanet_count
+        # Add number for each detection method, sorted descendingly
+        lines += ['By detection method:']
+        for method, count in sorted(self.data['by_method'].items(),
+                                    key=lambda x: x[1], reverse=True):
+            method = '  ' + method + ':'
+            lines.append(f'{method:<{max_key_length}}'
+                         f'{count:>{max_val_length}}')
+
+        # Add number for each planet class, sorted descendingly
+        lines += ['', 'By exoplanet class:']
+        for planet_class, count in sorted(self.data['by_class'].items(),
+                                          key=lambda x: x[1], reverse=True):
+            method = '  ' + planet_class + ':'
+            lines.append(f'{method:<{max_key_length}}'
+                         f'{count:>{max_val_length}}')
+
+        lines += ['', 80 * '-', '']
+
+        return '\n'.join(lines)
