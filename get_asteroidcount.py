@@ -16,6 +16,8 @@ def get_NEA(hazard: bool = True,
     Returns:
         A dictionary with keys `{"hazard", "large", "total"}`
         which holds the respective count of asteroids.
+
+        Arbitrary change.
     """
 
     asteroid_count = dict()
