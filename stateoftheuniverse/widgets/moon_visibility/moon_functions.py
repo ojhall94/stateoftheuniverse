@@ -35,10 +35,17 @@ def get_moon_state(time: datetime) -> bool:
         opposite -= 360.
 
     #Find whether waxing or waning
-    if (moonra > sunra) & (moonra < opposite):
-        waxing = True
-    else:
-        waxing=False
+    if sunra > 180:
+        if (moonra > sunra) or (moonra < opposite):
+            waxing = True
+        else:
+            waxing=False
+
+    elif sunra <= 180:
+        if (moonra > sunra) & (moonra < opposite):
+            waxing = True
+        else:
+            waxing=False
 
 def get_moon_phase(time: datetime) -> str:
     """ Code to get moon phase"""
@@ -68,33 +75,6 @@ def get_moon_phase(time: datetime) -> str:
     return phase
 
 if __name__ == "__main__":
-    i = []
-    ras = []
-    rasuns = []
-    state = [] #0 waxing 1 waning
-    for  d in range(30):
-        date = datetime.datetime(2019, 1, d+1)
-        time = Time(date)
-        moon = get_moon(time)
-        sun = get_sun(time)
-        ras.append(moon.ra.value)
-        rasuns.append(sun.ra.value)
-
-        ra = moon.ra.value
-        rasun = sun.ra.value
-        if ra > rasun:
-            state.append(0)
-        elif (ra < rasun-180.):
-            state.append(0)
-        elif (ra > rasun-180) & (ra < rasun):
-            state.append(1)
-        elif (ra == rasun):
-            state.append(2)
-        elif (ra == rasun-180.):
-            state.append(3)
-
-
-    plt.scatter(range(30), ras, c=state)
-    plt.axhline(sun.ra.value)
-    plt.axhline(sun.ra.value-180.)
-    plt.show()
+    time = datetime.datetime.now()
+    print('{} %'.format(get_moon_illumination(time)))
+    print('Our current phase is: {}'.format(get_moon_phase(time)))
