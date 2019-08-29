@@ -1,5 +1,3 @@
-import warnings
-warnings.filterwarnings("ignore")
 from astropy import units as u
 from astroplan import Observer
 from astropy.coordinates import SkyCoord, AltAz, get_constellation, EarthLocation
@@ -18,16 +16,16 @@ class ConstellationsWidget():
 		self.time = Time(time + ' 00:00:00')
 		
 		self.alt,self.az = np.meshgrid(np.arange(5,85,5),np.arange(5,355,5))
-		self.alt = self.alt.ravel()
-		self.az = self.az.ravel()
-	
+		self.alt = self.alt
+		self.az = self.az
+			
 		self.dome = SkyCoord(az=self.az*u.degree,
 				      alt=self.alt*u.degree, 
 				      frame=AltAz(obstime=self.time, location=self.location))
 		
 	def get_data(self):
-		self.constellations = list(set(get_constellation(self.dome)))
-		return self.constellations
+		self.constellations = set(get_constellation(self.dome))
+		return list(self.constellations)
 
 	def update_location(self,lon,lat,height):
 		 return EarthLocation.from_geodetic(lon = lon*u.degree, lat= lat*u.degree, height=height*u.meter)
@@ -35,20 +33,5 @@ class ConstellationsWidget():
 	def get_string(self):
 		data = self.get_data()
 		data.sort()
-
+		print(type(data))
 		return "Tonight's Constellations are:\n\t" + '\n\t'.join(data)
-	
-	def check_const(self,const_check):
-		if type(const_check) == str:
-			if const_check.lower() in [constellation.lower() for constellation in self.constellations]:
-				return True
-		elif type(const_check) == list:
-			bools = []
-			for const in const_check:
-				if const.lower() in [constellation.lower() for constellation in self.constellations]:
-					bools.append(True)
-				else:
-					bools.append(False)
-		else:
-			print("Function takes string or list of stings")
-			return False
