@@ -29,6 +29,8 @@ class WidgetPrototype(ABC):
 
         if datetime is None:
             self.datetime = dt.now()
+        else:
+            self.datetime = datetime
 
         self.data = None
 
