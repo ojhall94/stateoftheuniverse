@@ -59,14 +59,23 @@ class AsteroidWidget():
 
     def get_string(self):
 
+        string = ''
+
         if self.access_data = False:
-            return "Error: Cannot retrieve from the IAU Minor Planet Center.\nCheck your Internet connection and minorplanetcenter.net. If both are functional, please raise an issue on Github."
+            string = 'Error: Cannot retrieve from the IAU Minor Planet Center.\n'\
+            'Check your Internet connection and minorplanetcenter.net. '\
+            'If both are functional, please raise an issue on Github.'
 
         else:
-            return "We have discovered", asteroid_count['total'], "asteroids."
+            string += f'We have discovered {self.data["total"]} asteroids.'
 
-            if large:
-                return "Of those, there are", asteroid_count['large'], "near-Earth asteroids larger than 1 km wide."
+            if large in self.data.keys():
+                string += '\nOf those, there are {self.data["large"]} '\
+                'near-Earth asteroids larger than 1 km wide.'
 
-            if hazard:
-                return "Currently, there are", asteroid_count['hazard'], "near-Earth asteroids that are classified as potentially hazardous."
+            if hazard in self.data.keys():
+                string += '\nCurrently, there are {self.data["hazard"]} '\
+                'near-Earth asteroids that are classified as potentially '\
+                'hazardous.'
+
+        return string
