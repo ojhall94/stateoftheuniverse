@@ -2,17 +2,18 @@ from astroquery.mpc import MPC
 
 class AsteroidWidget():
 
-    def __init(self,
-             longitude: Optional[float] = None,
-             latitude: Optional[float] = None,
-             datetime: Optional[dt] = None):
+    def __init__(self,
+               longitude: Optional[float] = None,
+               latitude: Optional[float] = None,
+               datetime: Optional[dt] = None):
 
         super().__init__(longitude=longitude,
                          latitude=latitude,
                          datetime=datetime)
 
-    def get_data(self, hazard: bool = True,
-                    large: bool = True) -> dict:
+    def get_data(self,
+                 hazard: bool = True,
+                 large: bool = True) -> dict:
 
     """
     Get the current total number of near-Earth asteroids from the IAU
@@ -31,20 +32,29 @@ class AsteroidWidget():
 
     asteroid_count = dict()
 
-    # Get all potentially hazardous asteroids from MPC
-    PHA = len(MPC.query_objects('asteroid', pha=1))
-    asteroid_count['hazard'] = PHA
+        try:
+            # Get all potentially hazardous asteroids from MPC
+            pha = len(MPC.query_objects('asteroid', pha=1))
+            asteroid_count['hazard'] = pha
 
-    # Get all non-potentially hazardous asteroids greater than 1 km wide from MPC
-    NEA_1km = len(MPC.query_objects('asteroid', pha=0, km_neo=1))
-    asteroid_count['large'] = NEA_1km
+            # Get all non-potentially hazardous asteroids greater than 1 km wide from MPC
+            nea_1km = len(MPC.query_objects('asteroid', pha=0, km_neo=1))
+            asteroid_count['large'] = nea_1km
 
-# Get non-potentially hazardous asteroids smaller than 1 km from MPC
-    neos = [MPC.query_objects('asteroid', pha=0, km_neo=0, neo=1, orbit_type=orbtype) for orbtype in range(10)]
-    NEA_count = sum(len(neo) for neo in neos)
-    asteroid_count['total'] = NEA_count
+            # Get non-potentially hazardous asteroids smaller than 1 km from MPC
+            # Query by category of asteroid (main belt, Apollos, etc.) due to limits on how many objects query_objects can return at once
+            neos = [MPC.query_objects('asteroid', pha=0, km_neo=0, neo=1, orbit_type=orbtype) for orbtype in range(10)]
+            nea_count = sum(len(neo) for neo in neos)
 
-    self.data = asteroid_count
+            # Add all categories of asteroids together for total
+            asteroid_count['total'] = nea_count + pha + nea_1km
+
+            # Now that we have retrieved the data, store it
+            self.data = asteroid_count
+
+        except:
+            print("Error: Cannot retrieve from the IAU Minor Planet Center.")
+            print("Check your Internet connection and minorplanetcenter.net. If both are functional, please raise an issue on Github.")
 
     def get_string(self):
 
