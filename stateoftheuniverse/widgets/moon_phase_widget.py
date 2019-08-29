@@ -23,8 +23,12 @@ class MoonPhaseWidget(WidgetPrototype):
     def get_data(self):
         """Fill in docstring"""
 
-        self.illumination = self.get_moon_illumination()
-        self.phase = self.get_moon_phase()
+        try:
+            self.illumination = self.get_moon_illumination()
+            self.phase = self.get_moon_phase()
+            self.access_data = True
+        except:
+            self.access_data = False
 
     def get_moon_illumination(self) -> float:
         """ A function to return the moon illumination
@@ -33,10 +37,7 @@ class MoonPhaseWidget(WidgetPrototype):
         """
 
         astropytime = Time(self.datetime)
-        try:
-            illumination = astroplan.moon.moon_illumination(astropytime)
-        except:
-            print("Something has gone wrong. Please raise an issue on GitHub")
+        illumination = astroplan.moon.moon_illumination(astropytime)
         return illumination*100.
 
     def get_moon_state(self) -> bool:
@@ -73,12 +74,28 @@ class MoonPhaseWidget(WidgetPrototype):
 
         return phase
 
-    def get_string(self):
-        print(f'{self.illumination:.2f} %')
-        print(f'Our current moon phase is: {self.phase}')
+    def get_string(self) -> str:
+        string = ''
+        string += '\n' + 80 * '-' + '\n'
+        string += 'MOON PHASE INFORMATION'.center(80) + '\n'
+        string += 80 * '-' + '\n\n'
+
+        if self.access_data:
+            string += (f'The current Moon illumination is: {self.illumination:.2f} %\n')
+            string += (f'Our current moon phase is: {self.phase}\n\n')
+
+        else:
+            string += 'No data available.\n'
+            string += 'Did you perhaps forget to call ' \
+                      'get_data() first or have a problem with your\n' \
+                      'internet connection?\n\n'
+
+        string += 80 * '-' + '\n'
+        return string
+
 
 if __name__ == "__main__":
     time = datetime.datetime.now()
     widget = MoonPhaseWidget(time)
     widget.get_data()
-    widget.get_string()
+    print(widget.get_string())
