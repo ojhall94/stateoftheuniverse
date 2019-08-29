@@ -52,6 +52,8 @@ class AsteroidWidget():
             # Now that we have retrieved the data, store it
             self.data = asteroid_count
 
+            access_data = True
+
         except:
             access_data = False
 
