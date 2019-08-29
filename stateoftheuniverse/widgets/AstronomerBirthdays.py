@@ -10,6 +10,7 @@ from datetime import datetime as dt
 from dateutil.parser import parse as parse_date
 from SPARQLWrapper import SPARQLWrapper, JSON
 from typing import Optional
+from urllib.error import URLError
 
 from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 
@@ -89,8 +90,12 @@ class AstronomerBirthdays(WidgetPrototype):
             SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
             }""".replace('DT_MONTH', str(month)).replace('DT_DAY', str(day))
 
-        # Send the query and get the results
-        results = query_wikidata(query=query)['results']['bindings']
+        # Send the query and get the results. In case we do not have internet
+        # access (and thus get an URLError), the function ends here already.
+        try:
+            results = query_wikidata(query=query)['results']['bindings']
+        except URLError:
+            return
 
         # Loop over the results and extract only the parts that we want to keep
         data = list()
@@ -114,20 +119,30 @@ class AstronomerBirthdays(WidgetPrototype):
         # Store away the data retrieved by this method
         self.data = data
 
-    def get_string(self):
-
+    def get_string(self) -> str:
+    
         string = ''
         string += '\n' + 80 * '-' + '\n'
         string += 'BIRTHDAY CHILDS FROM ASTRONOMY'.center(80) + '\n'
         string += 80 * '-' + '\n\n'
+    
+        # If data is available, build a string from it
+        if self.data is not None:
 
-        for item in self.data:
-            birthdate = f'{item["birthdate"].strftime("%B %d, %Y")}'
-            deathdate = ('today' if item["deathdate"] is None else
-                         f'{item["deathdate"].strftime("%B %d, %Y")}')
-            string += item['name'] + f' ({birthdate} - {deathdate})' + '\n'
-            string += item['description'] + '\n'
-            string += item['wikipedia_url'] + '\n\n'
+            for item in self.data:
+                birthdate = f'{item["birthdate"].strftime("%B %d, %Y")}'
+                deathdate = ('today' if item["deathdate"] is None else
+                             f'{item["deathdate"].strftime("%B %d, %Y")}')
+                string += item['name'] + f' ({birthdate} - {deathdate})' + '\n'
+                string += item['description'] + '\n'
+                string += item['wikipedia_url'] + '\n\n'
+
+        # Otherwise, return a default message that something went wrong
+        else:
+            string += 'No data available.\n'
+            string += 'Did you perhaps forget to call ' \
+                      'get_data() first or have a problem with your\n' \
+                      'internet connection?\n\n'
 
         string += 80 * '-' + '\n'
 
