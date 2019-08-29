@@ -1,21 +1,15 @@
-#!/usr/bin/python3
-"""
-A function to return moon phase & moon brightness.
-"""
 
-import numpy as np
 import astroplan
 import astropy
 from astropy.time import Time
-import matplotlib.pyplot as plt
 from astropy.coordinates import get_moon, get_sun
 import datetime
-import warnings
-warnings.filterwarnings('ignore')
+import matplotlib.pyplot as plt
+import numpy as np
 
-def get_moon_illumination(time: datetime) -> float:
+def get_moon_illumination(time: datetime.datetime) -> float:
     """ A function to return the moon illumination
-
+    Test
     I'll fill this in later
     """
 
@@ -24,9 +18,9 @@ def get_moon_illumination(time: datetime) -> float:
         illumination = astroplan.moon.moon_illumination(astropytime)
     except:
         print("Something has gone wrong. Please raise an issue on GitHub")
-    return illumination*100
+    return illumination*100.
 
-def get_moon_state(time: datetime) -> bool:
+def get_moon_state(time: datetime.datetime) -> bool:
     """ A function to return whether the moon is waxing or waning
     """
     astropytime = Time(time)
@@ -36,48 +30,30 @@ def get_moon_state(time: datetime) -> bool:
     if opposite > 360.:
         opposite -= 360.
 
-    #Moon goes for west to east
-    #Find whether waxing or waning
     if sunra > 180:
-        if (moonra > sunra) or (moonra < opposite):
-            waxing = True
-        else:
-            waxing=False
-
+        waxing = (moonra > sunra) or (moonra < opposite)
     elif sunra <= 180:
-        if (moonra > sunra) & (moonra < opposite):
-            waxing = True
-        else:
-            waxing=False
+        waxing = (moonra > sunra) and (moonra < opposite)
 
-def get_moon_phase(time: datetime) -> str:
+def get_moon_phase(time: datetime.datetime) -> str:
     """ Code to get moon phase"""
     illumination = get_moon_illumination(time)
     waxing = get_moon_state(time)
 
-    if  illumination <= 0.1:
+    if illumination <= 0.1:
         phase = 'New Moon'
-    if (illumination > 0.1) & (illumination < 49.9):
-        if waxing:
-            phase = 'Waxing Crescent'
-        if not waxing:
-            phase = 'Waning Crescent'
-    if (illumination >= 49.9) & (illumination <= 50.1):
-        if waxing:
-            phase = 'First Quarter'
-        if not waxing:
-            phase = 'Last Quarter'
-    if (illumination > 50.1) & (illumination < 99.9):
-        if waxing:
-            phase = 'Waxing Gibbous'
-        if not waxing:
-            phase = 'Waning Gibbous'
-    if  illumination >= 99.9:
+    elif 0.1 < illumination < 49.9:
+        phase = 'Waxing Crescent' if waxing else 'Waning Crescent'
+    elif 49.9 <= illumination <= 50.1:
+        phase = 'First Quarter' if waxing else 'Last Quarter'
+    elif 50.1 < illumination < 99.9:
+        phase = 'Waxing Gibbous' if waxing else 'Waning Gibbous'
+    else:
         phase = 'Full Moon'
 
     return phase
 
 if __name__ == "__main__":
     time = Time(datetime.datetime.now())
-    print('{:.2f} %'.format(get_moon_illumination(time)))
-    print('Our current phase is: {}'.format(get_moon_phase(time)))
+    print(f'{get_moon_illumination(time):.2f} %')
+    print(f'Our current moon phase is: {get_moon_phase(time)}')
