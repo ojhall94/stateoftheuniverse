@@ -33,6 +33,7 @@ class WidgetPrototype(ABC):
             self.datetime = datetime
 
         self.data = None
+        self.name = None
 
     @abstractmethod
     def get_data(self):

@@ -1,5 +1,6 @@
 ![badge-img](https://img.shields.io/badge/Made%20at-%23AstroHackWeek-8063d5.svg?style=flat)
 # stateoftheuniverse
+
 ## A python package that returns the current state of the universe
 
 Would you like to know when the phase of the moon? What about the current tally of exoplanets and asteroids? Curious about the constellations and planets you can see in the sky tonight? Want to celebrate the birthdays of historical astronomers?
@@ -37,4 +38,3 @@ Please note that this package requires Python 3.6 or later. You will also need:
 - [SPARQLWrapper](https://github.com/RDFLib/sparqlwrapper)
 - [pyephem](https://pypi.org/project/ephem/)
 - [pytz](http://pytz.sourceforge.net/#installation)
-
