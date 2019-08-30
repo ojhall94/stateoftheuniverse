@@ -6,7 +6,7 @@ Get a list of constellations that will be visible from a location on the earth a
 #------------------------
 import warnings
 warnings.filterwarnings("ignore")
-from datetime import date as dt
+from datetime import datetime as dt
 from astropy import units as u
 from astroplan import Observer
 from astropy.coordinates import SkyCoord, AltAz, get_constellation, EarthLocation
@@ -35,7 +35,7 @@ class ConstellationsWidget(WidgetPrototype):
 		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, lat= self.latitude*u.degree, height=self.height*u.meter)
 
 		if self.datetime == None:
-			self.datetime = dt.today()
+			self.datetime = dt.now()
 			self.datetime = str(self.datetime)[:10] + ' 23:00:00'
 			self.time = Time(self.datetime)
 
