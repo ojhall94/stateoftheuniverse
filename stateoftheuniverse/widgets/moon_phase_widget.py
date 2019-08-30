@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 
-from prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 
 class MoonPhaseWidget(WidgetPrototype):
 
@@ -46,9 +46,7 @@ class MoonPhaseWidget(WidgetPrototype):
         astropytime = Time(self.datetime)
         moonra = get_moon(astropytime).ra.value
         sunra = get_sun(astropytime).ra.value
-        opposite = sunra + 180.
-        if opposite > 360.:
-            opposite -= 360.
+        opposite = (sunra + 180) % 360
 
         if sunra > 180:
             waxing = (moonra > sunra) or (moonra < opposite)
