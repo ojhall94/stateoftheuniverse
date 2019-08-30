@@ -21,6 +21,6 @@ def datetimes_equal_minutes(dt1, dt2):
 def test_sun_info(dt, lat, lon, expected):
     widget = EphemBodies(lon, lat, dt)
     widget.get_data()
-    print(widget.get_string())
+    # print(widget.get_string())
     assert datetimes_equal_minutes(widget.data['Sun'][0], expected[0])
     assert datetimes_equal_minutes(widget.data['Sun'][1], expected[1])

@@ -2,6 +2,7 @@ import ephem
 import pytz
 
 from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 
 TIMEZONE = pytz.timezone('Europe/London')
@@ -29,8 +30,10 @@ class EphemBodies(WidgetPrototype):
     ):
         super().__init__(longitude, latitude, datetime)
 
+        self.name = "Solar System bodies visibility"
+
         self.observer = ephem.Observer()
-        # dt must be in UTC!!!
+        # datetime must be in UTC!!!
         self.observer.date = str(datetime)
         # lat and lon must be converted to strings to make pyephem recognize them
         # as degrees, not radians
@@ -55,6 +58,7 @@ class EphemBodies(WidgetPrototype):
 
             self.data[body.name] = (rising.datetime(), setting.datetime())
 
+    @stringdecorator
     def get_string(self):
         return (
             f'Data computed for {dt_minutes(self.local_datetime)} in timezone {TIMEZONE}, '
