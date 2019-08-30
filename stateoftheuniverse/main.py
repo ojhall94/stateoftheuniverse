@@ -1,3 +1,4 @@
+import argparse
 from datetime import datetime
 
 from widgets import (
@@ -11,8 +12,12 @@ from widgets import (
 
 
 def main():
-    lat = 52.2
-    lon = 0.11667
+    parser = argparse.ArgumentParser(description='Input lat and lon')
+    # default to Cambridge
+    parser.add_argument('lat', type=float, default=52.2)
+    parser.add_argument('lon', type=float, default=0.11667)
+    args = parser.parse_args()
+
     dt = datetime.utcnow()
 
     print("STATE OF THE UNIVERSE\n")
@@ -24,7 +29,7 @@ def main():
         AsteroidCount,
         AstronomerBirthdays
     ]:
-        widget = widget_class(lon, lat, dt)
+        widget = widget_class(args.lon, args.lat, dt)
         widget.get_data()
         print(widget.get_string())
 
