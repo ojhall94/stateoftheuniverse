@@ -15,22 +15,22 @@ class AsteroidWidget():
                  hazard: bool = True,
                  large: bool = True) -> dict:
 
-    """
-    Get the current total number of near-Earth asteroids from the IAU
-    Minor Planet Center. Additionally, get the number of asteroids that
-    identified as potentially hazardous and larger than 1 km.
+         """
+         Get the current total number of near-Earth asteroids from the IAU
+         Minor Planet Center. Additionally, get the number of asteroids that
+         identified as potentially hazardous and larger than 1 km.
 
-    Args:
-        hazard: Returning the number of potentially hazardous
-            near-Earth asteroids.
-        large: Returning the number of near-Earth asteroids that
-            are larger than 1 km wide.
-    Returns:
-        A dictionary with keys `{"hazard", "large", "total"}`
-        which holds the respective count of asteroids.
-    """
+         Args:
+            hazard: Returning the number of potentially hazardous
+                near-Earth asteroids.
+            large: Returning the number of near-Earth asteroids that
+                are larger than 1 km wide.
+        Returns:
+            A dictionary with keys `{"hazard", "large", "total"}`
+            which holds the respective count of asteroids.
+        """
 
-    asteroid_count = dict()
+        asteroid_count = dict()
 
         try:
             # Get all potentially hazardous asteroids from MPC
@@ -43,7 +43,7 @@ class AsteroidWidget():
 
             # Get non-potentially hazardous asteroids smaller than 1 km from MPC
             # Query by category of asteroid (main belt, Apollos, etc.) due to limits on how many objects query_objects can return at once
-            neos = [MPC.query_objects('asteroid', pha=0, km_neo=0, neo=1, orbit_type=orbtype) for orbtype in range(10)]
+            neos = [MPC.query_objects('asteroid', pha=0, km_neo=0, neo=1, orbit_type=orbtype) for orbtype in range(11)]
             nea_count = sum(len(neo) for neo in neos)
 
             # Add all categories of asteroids together for total
@@ -57,6 +57,7 @@ class AsteroidWidget():
         except:
             self.access_data = False
 
+    @stringdecorator
     def get_string(self):
 
         """
@@ -72,9 +73,6 @@ class AsteroidWidget():
         """
 
         string = ''
-        string += '\n' + 80 * '-' + '\n'
-        string += 'NEAR-EARTH ASTEROIDS'.center(80) + '\n'
-        string += 80 * '-' + '\n\n'
 
         if self.access_data = False:
             string = 'Error: Cannot retrieve from the IAU Minor Planet Center.\n'\
@@ -92,7 +90,5 @@ class AsteroidWidget():
                 string += '\nCurrently, there are {self.data["hazard"]} '\
                 'near-Earth asteroids that are classified as potentially '\
                 'hazardous.'
-
-        string += 80 * '-' + '\n'
 
         return string
