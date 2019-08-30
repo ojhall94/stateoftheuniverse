@@ -5,6 +5,9 @@ Get the current number of asteroids we have discovered.
 # -----------------------------------------------------------------------------
 # IMPORTS
 # -----------------------------------------------------------------------------
+from astropy.utils.exceptions import AstropyDeprecationWarning
+import warnings
+warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 
 from astroquery.mpc import MPCClass
 from datetime import datetime as dt
