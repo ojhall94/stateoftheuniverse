@@ -1,6 +1,8 @@
 import argparse
 from datetime import datetime
 
+from geopy.geocoders import Nominatim
+
 from stateoftheuniverse.widgets import (
     EphemBodies,
     MoonPhaseWidget,
@@ -12,15 +14,23 @@ from stateoftheuniverse.widgets import (
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Input lat and lon')
-    # default to Cambridge
-    parser.add_argument('lat', type=float, default=52.2)
-    parser.add_argument('lon', type=float, default=0.11667)
+    parser = argparse.ArgumentParser()
+    # parser.add_argument('lat', type=float)
+    # parser.add_argument('lon', type=float)
+    # args = parser.parse_args()
+    # lat = args.lat
+    # lon = args.lon
+
+    parser.add_argument('place', type=str)
     args = parser.parse_args()
+
+    geolocator = Nominatim()
+    loc = geolocator.geocode(args.place)
+    lat = loc.latitude
+    lon = loc.longitude
 
     dt = datetime.utcnow()
 
-    print("STATE OF THE UNIVERSE\n")
     for widget_class in [
         EphemBodies,
         MoonPhaseWidget,
@@ -29,7 +39,7 @@ def main():
         AsteroidCount,
         AstronomerBirthdays
     ]:
-        widget = widget_class(args.lon, args.lat, dt)
+        widget = widget_class(lon, lat, dt)
         widget.get_data()
         print(widget.get_string())
 
