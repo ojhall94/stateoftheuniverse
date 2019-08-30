@@ -4,8 +4,6 @@ Get a list of constellations that will be visible from a location on the earth a
 #-------------------------
 #Imports
 #------------------------
-import warnings
-warnings.filterwarnings("ignore")
 from datetime import datetime as dt
 from astropy import units as u
 from astroplan import Observer
@@ -53,21 +51,24 @@ class ConstellationsWidget(WidgetPrototype):
 		
 	def get_data(self):
 		"""
-		Return list of tonight's constellations.
+		Update and store list of tonight's constellations.
 		"""
 
 		self.constellations = list(set(get_constellation(self.dome)))
 		self.constellations.sort()
 
-	def update_location(self,longitude,latitude,height):
-		"""
-		Update location from which constellations should be visible.
-		"""
-		
-		self.longitude = longitude
-		self.latitude = latitude
-		self.height = height
-		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, lat= self.latitude*u.degree, height=self.height*u.meter)
+#	def update_location(self,longitude,latitude,height):
+#		"""
+#		Update location from which constellations should be visible.
+#		"""
+#		
+#		self.longitude = longitude
+#		self.latitude = latitude
+#		self.height = height
+#		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, lat= self.latitude*u.degree, height=self.height*u.meter)
+#		self.dome = SkyCoord(az=self.az*u.degree,
+#				     alt=self.alt*u.degree, 
+#				     frame=AltAz(obstime=self.time, location=self.location))
 
 	def get_string(self):
 		"""
