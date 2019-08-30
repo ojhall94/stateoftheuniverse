@@ -3,7 +3,7 @@
 
 ## A python package that returns the current state of the universe
 
-Would you like to know when the phase of the moon? What about the current tally of exoplanets and asteroids? Curious about the constellations and planets you can see in the sky tonight? Want to celebrate the birthdays of historical astronomers?
+Would you like to know the phase of the moon? What about the current tally of exoplanets and asteroids? Curious about the constellations and planets you can see in the sky tonight? Want to celebrate the birthdays of historical astronomers?
 
 Then you are going to love stateoftheuniverse.
 
@@ -25,9 +25,11 @@ Input your location, and we'll do the rest.
 
 To install locally:
 
-'git clone https://github.com/ojhall94/stateoftheuniverse
+```
+git clone https://github.com/ojhall94/stateoftheuniverse
 cd stateoftheuniverse
-python3 setup.py install --user'
+python3 setup.py install --user
+```
 
 Please note that this package requires Python 3.6 or later. You will also need:
 - [astroplan](https://astroplan.readthedocs.io/en/latest/installation.html)
