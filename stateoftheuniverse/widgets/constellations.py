@@ -12,6 +12,7 @@ from astropy.time import Time
 import numpy as np
 from typing import Optional
 from prototypes import WidgetPrototype
+from utils import stringdecorator
 
 #-------------------------
 # Function Definitions
@@ -48,6 +49,7 @@ class ConstellationsWidget(WidgetPrototype):
 				     alt=self.alt*u.degree, 
 				     frame=AltAz(obstime=self.time, location=self.location))
 		self.constellations = None
+		self.name = "CONSTELLATIONS"
 		
 	def get_data(self):
 		"""
@@ -70,18 +72,15 @@ class ConstellationsWidget(WidgetPrototype):
 #				     alt=self.alt*u.degree, 
 #				     frame=AltAz(obstime=self.time, location=self.location))
 
+	@stringdecorator
 	def get_string(self):
 		"""
 		Return formatted output string of visible constellations.
 		"""
 		if self.constellations == None:
 			self.get_data()
-		string = ''
-		string += '\n' + 80 * '-' + '\n'
-		string += 'CONSTELLATIONS'.center(80) + '\n'
-		string += 80 * '-' + '\n\n'
 
-		string += "Tonight's Constellations are:\n\t" + '\n\t'.join(self.constellations)
+		string =  "Tonight's Constellations are:\n\t" + '\n\t'.join(self.constellations)
 		return string 
 
 	def check_const(self,const_check):
