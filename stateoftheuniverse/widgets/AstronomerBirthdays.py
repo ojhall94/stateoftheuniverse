@@ -13,6 +13,7 @@ from typing import Optional
 from urllib.error import URLError
 
 from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 
 # -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ def query_wikidata(query: str,
         A dictionary containing the information requested in `query`.
     """
 
-    sparql = SPARQLWrapper(url)
+    sparql = SPARQLWrapper(url, agent='stateoftheuniverse')
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
 
@@ -58,6 +59,8 @@ class AstronomerBirthdays(WidgetPrototype):
         super().__init__(longitude=longitude,
                          latitude=latitude,
                          datetime=datetime)
+
+        self.name = 'BIRTHDAY CHILDS FROM ASTRONOMY'
 
     def get_data(self):
         """
@@ -119,13 +122,11 @@ class AstronomerBirthdays(WidgetPrototype):
         # Store away the data retrieved by this method
         self.data = data
 
+    @stringdecorator
     def get_string(self) -> str:
-    
+
         string = ''
-        string += '\n' + 80 * '-' + '\n'
-        string += 'BIRTHDAY CHILDS FROM ASTRONOMY'.center(80) + '\n'
-        string += 80 * '-' + '\n\n'
-    
+
         # If data is available, build a string from it
         if self.data is not None:
 
@@ -136,14 +137,13 @@ class AstronomerBirthdays(WidgetPrototype):
                 string += item['name'] + f' ({birthdate} - {deathdate})' + '\n'
                 string += item['description'] + '\n'
                 string += item['wikipedia_url'] + '\n\n'
+            string = string[:-1]
 
         # Otherwise, return a default message that something went wrong
         else:
             string += 'No data available.\n'
             string += 'Did you perhaps forget to call ' \
                       'get_data() first or have a problem with your\n' \
-                      'internet connection?\n\n'
-
-        string += 80 * '-' + '\n'
+                      'internet connection?\n'
 
         return string
