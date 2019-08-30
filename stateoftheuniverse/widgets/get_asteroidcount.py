@@ -59,7 +59,22 @@ class AsteroidWidget():
 
     def get_string(self):
 
+        """
+        Return string representation of counts of near-Earth
+        asteroids that we currently know of from the IAU
+        Minor Planet Center.
+
+        Returns:
+            A string with a header that gives the number of
+            known near-Earth asteroids, as well as the number
+            potentially hazardous asteroids and asteroids larger
+            than 1 km (if specified by user).
+        """
+
         string = ''
+        string += '\n' + 80 * '-' + '\n'
+        string += 'NEAR-EARTH ASTEROIDS'.center(80) + '\n'
+        string += 80 * '-' + '\n\n'
 
         if self.access_data = False:
             string = 'Error: Cannot retrieve from the IAU Minor Planet Center.\n'\
@@ -77,5 +92,7 @@ class AsteroidWidget():
                 string += '\nCurrently, there are {self.data["hazard"]} '\
                 'near-Earth asteroids that are classified as potentially '\
                 'hazardous.'
+
+        string += 80 * '-' + '\n'
 
         return string
