@@ -1,5 +1,6 @@
 """
-Get a list of constellations that will be visible from a location on the earth as a given time.
+Get a list of constellations that will be visible from a location on the 
+earth as a given time.
 """
 #-------------------------
 #Imports
@@ -11,8 +12,8 @@ from astropy.coordinates import SkyCoord, AltAz, get_constellation, EarthLocatio
 from astropy.time import Time
 import numpy as np
 from typing import Optional
-from prototypes import WidgetPrototype
-from utils import stringdecorator
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 #-------------------------
 # Function Definitions
