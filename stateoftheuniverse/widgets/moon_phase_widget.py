@@ -11,7 +11,16 @@ from typing import Optional
 from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 
 class MoonPhaseWidget(WidgetPrototype):
+    """
+    A widget that calculates the illumination of the moon given the position
+    of the moon and the sun on the sky, and calculates the phase of the moon
+    given the RA of the moon and the sun.
 
+    Args:
+        longitude: the longitude of the user
+        latitude: the latitude of the user
+        datetime: a datetime.datetime object in UTC
+    """
     def __init__(self,
                 longitude: Optional[float] = None,
                 latitude: Optional[float] = None,
@@ -21,7 +30,11 @@ class MoonPhaseWidget(WidgetPrototype):
                          datetime=datetime)
 
     def get_data(self):
-        """Fill in docstring"""
+        """
+        Call the functions for illumination and moon phase. If these functions
+        fail for whatever reason, a boolean variable is stored as false. The
+        illumination and phase are stored as properties.
+        """
 
         try:
             self.illumination = self.get_moon_illumination()
@@ -31,9 +44,12 @@ class MoonPhaseWidget(WidgetPrototype):
             self.access_data = False
 
     def get_moon_illumination(self) -> float:
-        """ A function to return the moon illumination
-        Test
-        I'll fill this in later
+        """
+        Calculates the illumination of the moon based on the positions of the
+        moon and the sun on the sky.
+
+        Returns:
+            A float percentage value between 0 and 100.
         """
 
         astropytime = Time(self.datetime)
@@ -41,7 +57,13 @@ class MoonPhaseWidget(WidgetPrototype):
         return illumination*100.
 
     def get_moon_state(self) -> bool:
-        """ A function to return whether the moon is waxing or waning
+        """
+        Finds whether the moon is currently waxing or waning based on the
+        difference in RA between the moon and the sun on the sky.
+
+        Returns:
+            A bool which is true if the moon is waxing, and false if it is
+            waning.
         """
         astropytime = Time(self.datetime)
         moonra = get_moon(astropytime).ra.value
@@ -56,7 +78,13 @@ class MoonPhaseWidget(WidgetPrototype):
         return waxing
 
     def get_moon_phase(self) -> str:
-        """ Code to get moon phase"""
+        """
+        Finds the current phase of the moon depending on the current moon
+        illumination, and whether the moon is waxing or waning.
+
+        Returns:
+            A string describing the current phase of the moon.
+        """
         waxing = self.get_moon_state()
 
         if self.illumination <= 0.1:
@@ -73,6 +101,12 @@ class MoonPhaseWidget(WidgetPrototype):
         return phase
 
     def get_string(self) -> str:
+        """
+        Returns the string representation of the calculated properties.
+
+        Returns: A string with a header describing the calculated illumination
+        and moon phase.
+        """
         string = ''
         string += '\n' + 80 * '-' + '\n'
         string += 'MOON PHASE INFORMATION'.center(80) + '\n'
