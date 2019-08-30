@@ -4,28 +4,28 @@ from prototypes import WidgetPrototype
 class AsteroidWidget(WidgetPrototype):
 
     def __init__(self,
-               longitude: Optional[float] = None,
-               latitude: Optional[float] = None,
-               datetime: Optional[dt] = None):
+                longitude,
+                latitude,
+                datetime):
 
         super().__init__(longitude=longitude,
                          latitude=latitude,
                          datetime=datetime)
 
     def get_data(self,
-                 hazard: bool = True,
-                 large: bool = True) -> dict:
+                hazard: bool = True,
+                large: bool = True) -> dict:
 
-         """
-         Get the current total number of near-Earth asteroids from the IAU
-         Minor Planet Center. Additionally, get the number of asteroids that
-         identified as potentially hazardous and larger than 1 km.
+        """
+        Get the current total number of near-Earth asteroids from the IAU
+        Minor Planet Center. Additionally, get the number of asteroids that
+        identified as potentially hazardous and larger than 1 km.
 
-         Args:
-            hazard: Returning the number of potentially hazardous
-                near-Earth asteroids.
-            large: Returning the number of near-Earth asteroids that
-                are larger than 1 km wide.
+        Args:
+           hazard: Returning the number of potentially hazardous
+               near-Earth asteroids.
+           large: Returning the number of near-Earth asteroids that
+               are larger than 1 km wide.
         Returns:
             A dictionary with keys `{"hazard", "large", "total"}`
             which holds the respective count of asteroids.
@@ -58,7 +58,7 @@ class AsteroidWidget(WidgetPrototype):
         except:
             self.access_data = False
 
-    @stringdecorator
+#    @stringdecorator
     def get_string(self):
 
         """
@@ -75,7 +75,7 @@ class AsteroidWidget(WidgetPrototype):
 
         string = ''
 
-        if self.access_data = False:
+        if self.access_data == False:
             string = 'Error: Cannot retrieve from the IAU Minor Planet Center.\n'\
             'Check your Internet connection and minorplanetcenter.net. '\
             'If both are functional, please raise an issue on Github.'
