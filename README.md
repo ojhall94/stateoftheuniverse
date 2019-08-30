@@ -8,6 +8,7 @@ Then you are going to love stateoftheuniverse.
 
 Input your location, and we'll do the rest. 
 
+
 ### Made possible at Astro Hack Week 2019 by:
 - Timothy Gebhard [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/timothygebhard/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/tdgebhard/)
 - Oliver Hall [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/ojhall94/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/asteronomer/)
@@ -19,8 +20,15 @@ Input your location, and we'll do the rest.
 
 ## Retrieving the state of the universe
 
+### Installation
 
-This package requires Python 3.6 or later. You will also need:
+To install locally:
+
+'git clone https://github.com/ojhall94/stateoftheuniverse
+cd stateoftheuniverse
+python3 setup.py install --user'
+
+Please note that this package requires Python 3.6 or later. You will also need:
 - [astroplan](https://astroplan.readthedocs.io/en/latest/installation.html)
 - [astropy](https://docs.astropy.org/en/stable/install.html)
 - [astroquery](https://astroquery.readthedocs.io/en/latest/#installation)
