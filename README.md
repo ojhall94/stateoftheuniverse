@@ -15,7 +15,7 @@ Input your location, and we'll do the rest.
 - Oliver Hall [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/ojhall94/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/asteronomer/)
 - Ania Kapuścińska [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/lambdanis/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/lambdanis/)
 - Mariarosa Marinelli [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/astromariarosa/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/astromariarosa/)
-- Eli Prater [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/pratere/)
+- Eli Prater [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/pratere/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/AstroPrater/)
 
 
 
