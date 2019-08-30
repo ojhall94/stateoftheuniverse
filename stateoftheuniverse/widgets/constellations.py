@@ -12,48 +12,44 @@ from astroplan import Observer
 from astropy.coordinates import SkyCoord, AltAz, get_constellation, EarthLocation
 from astropy.time import Time
 import numpy as np
+from typing import Optional
+from prototypes import WidgetPrototype
 
 #-------------------------
 # Function Definitions
 #------------------------
-class ConstellationsWidget():
+class ConstellationsWidget(WidgetPrototype):
 	"""
 	
 	"""
-	def __init__(self, 
-		longitude = 52.2053, 
-		latitude = 0.1218, 
-		height = 15000, 
-		time = None):
+	def __init__(self,
+                     longitude: Optional[float] = None,
+                     latitude: Optional[float] = None,
+                     datetime: Optional[dt] = None):
+		super().__init__(longitude=longitude,
+		                 latitude=latitude,
+		                 datetime=datetime) 
 
-		self.longitude = longitude
-		self.latitude = latitude
-		self.height = height
+		self.height = 1500
 
 		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, lat= self.latitude*u.degree, height=self.height*u.meter)
 
-		if time == None:
+		if self.datetime == None:
 			self.datetime = dt.today()
 			self.datetime = str(self.datetime)[:10] + ' 23:00:00'
 			self.time = Time(self.datetime)
 
-		elif len(time) > 10:
-			self.time = Time(time)
-
-		elif len(time) == 10:
-			self.time = Time(time + ' 23:00:00')
-
 		else:
-			print("Time must left be of the form YYYY-MM-DD or not passed for tonights sky")
+			self.time = Time(self.datetime)
 		
 		self.alt,self.az = np.meshgrid(np.arange(5,85,5),np.arange(5,355,5))
 		self.alt = self.alt.ravel()
 		self.az = self.az.ravel()
-	
+
 		self.dome = SkyCoord(az=self.az*u.degree,
-				      alt=self.alt*u.degree, 
-				      frame=AltAz(obstime=self.time, location=self.location))
-		self.data = None
+				     alt=self.alt*u.degree, 
+				     frame=AltAz(obstime=self.time, location=self.location))
+		self.constellations = None
 		
 	def get_data(self):
 		"""
@@ -62,7 +58,6 @@ class ConstellationsWidget():
 
 		self.constellations = list(set(get_constellation(self.dome)))
 		self.constellations.sort()
-		return self.constellations
 
 	def update_location(self,longitude,latitude,height):
 		"""
@@ -78,12 +73,16 @@ class ConstellationsWidget():
 		"""
 		Return formatted output string of visible constellations.
 		"""
-		print(type(self.data))
-		if self.data == None:
-			self.data = self.get_data()
+		if self.constellations == None:
+			self.get_data()
+		string = ''
+		string += '\n' + 80 * '-' + '\n'
+		string += 'CONSTELLATIONS'.center(80) + '\n'
+		string += 80 * '-' + '\n\n'
 
-		return "Tonight's Constellations are:\n\t" + '\n\t'.join(self.data)
-	
+		string += "Tonight's Constellations are:\n\t" + '\n\t'.join(self.constellations)
+		return string 
+
 	def check_const(self,const_check):
 		"""
 		Return bool or list of bools for if a given constellation will be in visible on data.
@@ -105,3 +104,16 @@ class ConstellationsWidget():
 		else:
 			print("Function takes string or list of stings")
 			return False
+
+
+if __name__ == "__main__":
+	const = ConstellationsWidget(longitude=52.2053, latitude=0.1218)
+
+	print(const.get_string())
+
+	for constellation in const.constellations: 
+		if not const.check_const(str(constellation)):
+			print("Failed to find " + constellation)
+
+	print(const.check_const(const.constellations))
+

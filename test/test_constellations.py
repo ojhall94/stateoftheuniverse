@@ -4,9 +4,9 @@ const = ConstellationsWidget()
 
 print(const.get_string())
 
-for constellation in const.get_data():
+for constellation in const.constellations: 
 	if not const.check_const(str(constellation)):
 		print("Failed to find " + constellation)
 
-print(const.check_const(const.get_data()))
+print(const.check_const(const.constellations))
 
