@@ -37,7 +37,7 @@ def query_wikidata(query: str,
         A dictionary containing the information requested in `query`.
     """
 
-    sparql = SPARQLWrapper(url)
+    sparql = SPARQLWrapper(url, agent='stateoftheuniverse')
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
 
