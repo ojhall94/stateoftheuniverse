@@ -3,12 +3,13 @@ import astroplan
 import astropy
 from astropy.time import Time
 from astropy.coordinates import get_moon, get_sun
-import datetime
+import datetime as dt
 import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 
 from prototypes import WidgetPrototype
+from utils import stringdecorator
 
 class MoonPhaseWidget(WidgetPrototype):
     """
@@ -24,10 +25,18 @@ class MoonPhaseWidget(WidgetPrototype):
     def __init__(self,
                 longitude: Optional[float] = None,
                 latitude: Optional[float] = None,
-                datetime: Optional[datetime.datetime] = None):
+                datetime: Optional[dt.datetime] = None):
+
+        if datetime is None:
+            self.datetime = dt.datetime.now()
+        else:
+            self.datetime = datetime
+
         super().__init__(longitude=longitude,
                          latitude=latitude,
                          datetime=datetime)
+
+        self.name = 'MOON PHASE INFORMATION'
 
     def get_data(self):
         """
@@ -100,6 +109,7 @@ class MoonPhaseWidget(WidgetPrototype):
 
         return phase
 
+    @stringdecorator
     def get_string(self) -> str:
         """
         Returns the string representation of the calculated properties.
@@ -107,27 +117,23 @@ class MoonPhaseWidget(WidgetPrototype):
         Returns: A string with a header describing the calculated illumination
         and moon phase.
         """
-        string = ''
-        string += '\n' + 80 * '-' + '\n'
-        string += 'MOON PHASE INFORMATION'.center(80) + '\n'
-        string += 80 * '-' + '\n\n'
 
+        string = ''
         if self.access_data:
             string += (f'The current Moon illumination is: {self.illumination:.2f} %\n')
-            string += (f'Our current moon phase is: {self.phase}\n\n')
+            string += (f'Our current moon phase is: {self.phase}\n')
 
         else:
             string += 'No data available.\n'
             string += 'Did you perhaps forget to call ' \
                       'get_data() first or have a problem with your\n' \
-                      'internet connection?\n\n'
+                      'internet connection?\n'
 
-        string += 80 * '-' + '\n'
         return string
 
 
 if __name__ == "__main__":
-    time = datetime.datetime.now()
+    time = dt.datetime.now()
     widget = MoonPhaseWidget(time)
     widget.get_data()
     print(widget.get_string())
