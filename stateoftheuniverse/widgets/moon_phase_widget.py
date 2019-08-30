@@ -1,6 +1,3 @@
-from astropy.utils.exceptions import AstropyDeprecationWarning
-import warnings
-warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 
 import astroplan
 import astropy
