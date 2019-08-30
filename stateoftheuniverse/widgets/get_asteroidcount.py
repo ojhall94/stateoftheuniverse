@@ -1,6 +1,7 @@
 from astroquery.mpc import MPC
+from prototypes import WidgetPrototype
 
-class AsteroidWidget():
+class AsteroidWidget(WidgetPrototype):
 
     def __init__(self,
                longitude: Optional[float] = None,
