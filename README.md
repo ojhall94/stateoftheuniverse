@@ -2,7 +2,11 @@
 # stateoftheuniverse
 ## A python package that returns the current state of the universe
 
-Proposed by Mariarosa Marinelli
+Would you like to know when the phase of the moon? What about the current tally of exoplanets and asteroids? Curious about the constellations and planets you can see in the sky tonight? Want to celebrate the birthdays of historical astronomers?
+
+Then you are going to love stateoftheuniverse.
+
+Input your location, and we'll do the rest. 
 
 ### Made possible at Astro Hack Week 2019 by:
 - Timothy Gebhard [![github icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/github.png)](https://github.com/timothygebhard/) [![twitter icon](https://github.com/encharm/Font-Awesome-SVG-PNG/blob/master/black/png/22/twitter.png)](https://twitter.com/tdgebhard/)
