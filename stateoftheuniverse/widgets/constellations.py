@@ -1,9 +1,13 @@
 """
-Get a list of constellations that will be visible from a location on the earth as a given time.
+Get a list of constellations that will be visible from a location on the 
+earth as a given time.
 """
 #-------------------------
 #Imports
 #------------------------
+from astropy.utils.exceptions import AstropyDeprecationWarning
+import warnings
+warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 from datetime import datetime as dt
 from astropy import units as u
 from astroplan import Observer
