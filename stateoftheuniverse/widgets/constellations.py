@@ -15,8 +15,8 @@ from astropy.coordinates import SkyCoord, AltAz, get_constellation, EarthLocatio
 from astropy.time import Time
 import numpy as np
 from typing import Optional
-from widgets.prototypes import WidgetPrototype
-from widgets.utils import stringdecorator
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 #-------------------------
 # Function Definitions

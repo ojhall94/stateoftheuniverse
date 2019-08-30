@@ -1,6 +1,9 @@
+import argparse
 from datetime import datetime
 
-from widgets import (
+from geopy.geocoders import Nominatim
+
+from stateoftheuniverse.widgets import (
     EphemBodies,
     MoonPhaseWidget,
     ConstellationsWidget,
@@ -11,8 +14,21 @@ from widgets import (
 
 
 def main():
-    lat = 52.2
-    lon = 0.11667
+    parser = argparse.ArgumentParser()
+    # parser.add_argument('lat', type=float)
+    # parser.add_argument('lon', type=float)
+    # args = parser.parse_args()
+    # lat = args.lat
+    # lon = args.lon
+
+    parser.add_argument('place', type=str)
+    args = parser.parse_args()
+
+    geolocator = Nominatim()
+    loc = geolocator.geocode(args.place)
+    lat = loc.latitude
+    lon = loc.longitude
+
     dt = datetime.utcnow()
 
     for widget_class in [

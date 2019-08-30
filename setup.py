@@ -10,7 +10,12 @@ setup(name='stateoftheuniverse',
                         'SPARQLWrapper',
                         'astroplan',
                         'pyephem',
-                        'pytz'],
+                        'pytz',
+                        'timezonefinder',
+                        'geopy'],
       test_requires=['pytest'],
-      packages=['stateoftheuniverse'],
+      packages=['stateoftheuniverse', 'stateoftheuniverse.widgets'],
+      entry_points={
+          'console_scripts': ['stateoftheuniverse = stateoftheuniverse.main:main']
+      },
       zip_safe=False)

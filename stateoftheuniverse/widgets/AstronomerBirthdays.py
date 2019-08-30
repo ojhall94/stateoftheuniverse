@@ -12,8 +12,8 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from typing import Optional
 from urllib.error import URLError
 
-from widgets.prototypes import WidgetPrototype
-from widgets.utils import stringdecorator
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 
 # -----------------------------------------------------------------------------
