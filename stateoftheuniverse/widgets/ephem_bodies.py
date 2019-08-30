@@ -1,11 +1,12 @@
 import ephem
 import pytz
+import timezonefinder
 
 from widgets.prototypes import WidgetPrototype
 from widgets.utils import stringdecorator
 
 
-TIMEZONE = pytz.timezone('Europe/London')
+# TIMEZONE = pytz.timezone('Europe/London')
 
 EPHEM_BODIES = [
     ephem.Sun(),
@@ -40,7 +41,10 @@ class EphemBodies(WidgetPrototype):
         self.observer.lat = str(latitude)
         self.observer.lon = str(longitude)
 
-        self.local_datetime = datetime.astimezone(TIMEZONE)
+        tf = timezonefinder.TimezoneFinder()
+        tz_str = tf.timezone_at(lng=longitude, lat=latitude)
+        self.timezone = pytz.timezone(tz_str)
+        self.local_datetime = datetime.astimezone(self.timezone)
 
     def get_data(self):
         """
@@ -61,7 +65,7 @@ class EphemBodies(WidgetPrototype):
     @stringdecorator
     def get_string(self):
         return (
-            f'Data computed for {dt_minutes(self.local_datetime)} in timezone {TIMEZONE}, '
+            f'Data computed for {dt_minutes(self.local_datetime)} in timezone {self.timezone}, '
             f'latitude {self.latitude}, longitude {self.longitude}\n\n' +
             f'\n'.join(
                 self.body_summary(name, v[0], v[1])
@@ -71,8 +75,8 @@ class EphemBodies(WidgetPrototype):
 
     def body_summary(self, name, rising, setting):
         # Convert all datetimes from UTC to local timezone
-        rising = rising.astimezone(TIMEZONE)
-        setting = setting.astimezone(TIMEZONE)
+        rising = rising.astimezone(self.timezone)
+        setting = setting.astimezone(self.timezone)
 
         # Body is below the horizon and won't rise today
         if rising.date() > self.local_datetime.date():

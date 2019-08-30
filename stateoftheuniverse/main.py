@@ -15,6 +15,7 @@ def main():
     lon = 0.11667
     dt = datetime.utcnow()
 
+    print("STATE OF THE UNIVERSE\n")
     for widget_class in [
         EphemBodies,
         MoonPhaseWidget,
