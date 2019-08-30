@@ -38,5 +38,3 @@ Please note that this package requires Python 3.6 or later. You will also need:
 - [pyephem](https://pypi.org/project/ephem/)
 - [pytz](http://pytz.sourceforge.net/#installation)
 
-
-
