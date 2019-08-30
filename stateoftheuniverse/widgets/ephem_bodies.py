@@ -1,8 +1,8 @@
 import ephem
 import pytz
 
-from stateoftheuniverse.widgets.prototypes import WidgetPrototype
-from stateoftheuniverse.widgets.utils import stringdecorator
+from widgets.prototypes import WidgetPrototype
+from widgets.utils import stringdecorator
 
 
 TIMEZONE = pytz.timezone('Europe/London')
@@ -62,7 +62,7 @@ class EphemBodies(WidgetPrototype):
     def get_string(self):
         return (
             f'Data computed for {dt_minutes(self.local_datetime)} in timezone {TIMEZONE}, '
-            f'latitude {self.latitude}, longitude {self.longitude}\n' +
+            f'latitude {self.latitude}, longitude {self.longitude}\n\n' +
             f'\n'.join(
                 self.body_summary(name, v[0], v[1])
                 for name, v in self.data.items()

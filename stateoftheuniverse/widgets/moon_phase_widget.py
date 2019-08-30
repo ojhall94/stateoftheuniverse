@@ -3,16 +3,13 @@ import warnings
 warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 
 import astroplan
-import astropy
 from astropy.time import Time
 from astropy.coordinates import get_moon, get_sun
 import datetime as dt
-import matplotlib.pyplot as plt
-import numpy as np
 from typing import Optional
 
-from prototypes import WidgetPrototype
-from utils import stringdecorator
+from widgets.prototypes import WidgetPrototype
+from widgets.utils import stringdecorator
 
 class MoonPhaseWidget(WidgetPrototype):
     """
