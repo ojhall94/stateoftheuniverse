@@ -2,8 +2,8 @@ import ephem
 import pytz
 import timezonefinder
 
-from widgets.prototypes import WidgetPrototype
-from widgets.utils import stringdecorator
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 
 # TIMEZONE = pytz.timezone('Europe/London')

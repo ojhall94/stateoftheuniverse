@@ -8,8 +8,8 @@ from astropy.coordinates import get_moon, get_sun
 import datetime as dt
 from typing import Optional
 
-from widgets.prototypes import WidgetPrototype
-from widgets.utils import stringdecorator
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 
 class MoonPhaseWidget(WidgetPrototype):
     """

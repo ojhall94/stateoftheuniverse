@@ -14,7 +14,7 @@ from datetime import datetime as dt
 from typing import Optional
 from urllib.error import URLError
 
-from widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 
 
 # -----------------------------------------------------------------------------

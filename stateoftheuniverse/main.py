@@ -1,7 +1,7 @@
 import argparse
 from datetime import datetime
 
-from widgets import (
+from stateoftheuniverse.widgets import (
     EphemBodies,
     MoonPhaseWidget,
     ConstellationsWidget,

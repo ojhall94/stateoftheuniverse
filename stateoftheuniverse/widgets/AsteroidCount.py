@@ -9,8 +9,8 @@ Get the current number of asteroids we have discovered.
 from astroquery.mpc import MPCClass
 from datetime import datetime as dt
 from requests.exceptions import ConnectionError
-from widgets.prototypes import WidgetPrototype
-from widgets.utils import stringdecorator
+from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from stateoftheuniverse.widgets.utils import stringdecorator
 from typing import Optional
 
 
