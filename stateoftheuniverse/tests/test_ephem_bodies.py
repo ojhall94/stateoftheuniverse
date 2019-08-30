@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytest
 
-from widgets.sun import get_sun_info
+from stateoftheuniverse.widgets.ephem_bodies import EphemBodies
 
 
 def datetimes_equal_minutes(dt1, dt2):
@@ -19,6 +19,8 @@ def datetimes_equal_minutes(dt1, dt2):
      (datetime(2019, 8, 27, 5, 1), datetime(2019, 8, 27, 18, 59))),
 ])
 def test_sun_info(dt, lat, lon, expected):
-    result = get_sun_info(dt, lat, lon)
-    assert datetimes_equal_minutes(result[0], expected[0])
-    assert datetimes_equal_minutes(result[1], expected[1])
+    widget = EphemBodies(lon, lat, dt)
+    widget.get_data()
+    print(widget.get_string())
+    assert datetimes_equal_minutes(widget.data['Sun'][0], expected[0])
+    assert datetimes_equal_minutes(widget.data['Sun'][1], expected[1])
