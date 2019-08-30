@@ -19,7 +19,13 @@ from utils import stringdecorator
 #------------------------
 class ConstellationsWidget(WidgetPrototype):
 	"""
-	
+	A widget that collects and holds list of constellations which will 
+	be in the sky at the users location at midnight
+
+	Args:
+	    longitude: the longitude of the user
+	    latitude: the latitude of the user
+	    datetime: a datetime.datetime object in UTC
 	"""
 	def __init__(self,
                      longitude: Optional[float] = None,
@@ -31,7 +37,9 @@ class ConstellationsWidget(WidgetPrototype):
 
 		self.height = 1500
 
-		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, lat= self.latitude*u.degree, height=self.height*u.meter)
+		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, 
+							    lat= self.latitude*u.degree, 
+							    height=self.height*u.meter)
 
 		if self.datetime == None:
 			self.datetime = dt.now()
@@ -53,7 +61,9 @@ class ConstellationsWidget(WidgetPrototype):
 		
 	def get_data(self):
 		"""
-		Update and store list of tonight's constellations.
+		Update and store list of tonight's constellations, based on the users 
+		location. Uses a matrix of points on the sky to retrieve constellations
+		that they are located in.
 		"""
 
 		self.constellations = list(set(get_constellation(self.dome)))
@@ -87,20 +97,22 @@ class ConstellationsWidget(WidgetPrototype):
 		"""
 		Return bool or list of bools for if a given constellation will be in visible on data.
 		"""
-	
+
+		if self.constellations == None:
+			self.get_data()
 		if type(const_check) == str:
 			if const_check.lower() in [constellation.lower() for constellation in self.constellations]:
-				return True
+				return f"{const_check} will be visible tonight."
+			else:
+				return f"{const_check} will not be visible tonight."
 		elif type(const_check) == list:
-			bools = []
+			avail_consts = []
 			for const in const_check:
 				if const.lower() in [constellation.lower() for constellation in self.constellations]:
-					bools.append(True)
+					avail_consts.append(f"{const} will be visible tonight.")
 				else:
-					bools.append(False)
-			if all(bools):
-				return True
-			return False
+					avail_consts.append(f"{const} will not be visible tonight.")
+			return avail_consts
 		else:
 			print("Function takes string or list of stings")
 			return False
