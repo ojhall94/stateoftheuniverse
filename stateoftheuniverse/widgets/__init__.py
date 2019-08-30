@@ -1,0 +1,6 @@
+from widgets.ephem_bodies import EphemBodies
+from widgets.moon_phase_widget import MoonPhaseWidget
+from widgets.constellations import ConstellationsWidget
+from widgets.ExoplanetCount import ExoplanetCount
+from widgets.AsteroidCount import AsteroidCount
+from widgets.AstronomerBirthdays import AstronomerBirthdays

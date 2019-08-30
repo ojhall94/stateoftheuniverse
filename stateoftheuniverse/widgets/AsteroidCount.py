@@ -12,8 +12,8 @@ warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 from astroquery.mpc import MPCClass
 from datetime import datetime as dt
 from requests.exceptions import ConnectionError
-from stateoftheuniverse.widgets.prototypes import WidgetPrototype
-from stateoftheuniverse.widgets.utils import stringdecorator
+from widgets.prototypes import WidgetPrototype
+from widgets.utils import stringdecorator
 from typing import Optional
 
 
