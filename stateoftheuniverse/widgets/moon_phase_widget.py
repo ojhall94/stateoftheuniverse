@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 
-from stateoftheuniverse.widgets.prototypes import WidgetPrototype
+from prototypes import WidgetPrototype
 
 class MoonPhaseWidget(WidgetPrototype):
     """
