@@ -24,9 +24,11 @@ Input your location, and we'll do the rest.
 
 To install locally:
 
-`git clone https://github.com/ojhall94/stateoftheuniverse
+```
+git clone https://github.com/ojhall94/stateoftheuniverse
 cd stateoftheuniverse
-python3 setup.py install --user`
+python3 setup.py install --user
+```
 
 Please note that this package requires Python 3.6 or later. You will also need:
 - [astroplan](https://astroplan.readthedocs.io/en/latest/installation.html)
