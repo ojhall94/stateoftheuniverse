@@ -61,7 +61,7 @@ class ConstellationsWidget(WidgetPrototype):
 				     alt=self.alt*u.degree, 
 				     frame=AltAz(obstime=self.time, location=self.location))
 		self.constellations = None
-		self.name = "CONSTELLATIONS"
+		self.name = "TONIGHT'S CONSTELLATIONS"
 		
 	def get_data(self):
 		"""
@@ -72,6 +72,15 @@ class ConstellationsWidget(WidgetPrototype):
 
 		self.constellations = list(set(get_constellation(self.dome)))
 		self.constellations.sort()
+		consts = self.constellations
+		print(consts)
+                return consts
+
+        def return_data(self):
+	        """
+		Return stored data.
+		"""
+		return self.constellations
 
 	@stringdecorator
 	def get_string(self):
@@ -81,7 +90,7 @@ class ConstellationsWidget(WidgetPrototype):
 		if self.constellations == None:
 			self.get_data()
 
-		string =  "Tonight's Constellations are:\n\t" + '\n\t'.join(self.constellations)
+		string = '\n\t'.join(self.constellations)
 		return string 
 
 	def check_const(self,const_check):

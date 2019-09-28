@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>StateoftheUniverse</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+body {
+background-image: url("../background.jpg")
+}
+
+.container {
+text-align: center;
+}
+
+ul {
+width: 450px;           /* change it to whatever you like */
+position: relative;
+text-align:center;
+/* these should be probably already set up by `reset.css` */ 
+list-style-type: none;
+margin: 0;
+padding: 0;
+display: inline-block;
+}
+
+ul:after {
+position: absolute;
+top: 0;
+left: 48%;
+margin-left: 1px;    
+}
+
+li {
+text-align: center;
+width: 48%;
+float: left;
+margin-bottom: -1px;
+display: inline-block;
+}
+
+li:nth-child(even) {
+margin-left: -1px;
+}
+</style>
+
+<body>
+<div class="container">
+	<header>
+		<center>
+			<h1>StateoftheUniverse</h1>
+		</center>
+		<div>
+			<h2>Tonight's Constellations</h2>
+			{% if dictionary.consts %}
+				<ul>
+					{% for const in dictionary.consts %}
+					<li> {{ const }} </li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			<h2>
+		</div>
+	</header>
+</div>
+</body>
+</html>
