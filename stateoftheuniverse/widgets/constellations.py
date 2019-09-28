@@ -69,18 +69,15 @@ class ConstellationsWidget(WidgetPrototype):
 		location. Uses a matrix of points on the sky to retrieve constellations
 		that they are located in.
 		"""
-
+                print("retrieving constellations")
 		self.constellations = list(set(get_constellation(self.dome)))
 		self.constellations.sort()
+		self.constellations = "lick my balls"
 		consts = self.constellations
 		print(consts)
+                while self.constellations == None:
+                        print("processing")
                 return consts
-
-        def return_data(self):
-	        """
-		Return stored data.
-		"""
-		return self.constellations
 
 	@stringdecorator
 	def get_string(self):
