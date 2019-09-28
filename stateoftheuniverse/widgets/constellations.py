@@ -73,19 +73,6 @@ class ConstellationsWidget(WidgetPrototype):
 		self.constellations = list(set(get_constellation(self.dome)))
 		self.constellations.sort()
 
-#	def update_location(self,longitude,latitude,height):
-#		"""
-#		Update location from which constellations should be visible.
-#		"""
-#		
-#		self.longitude = longitude
-#		self.latitude = latitude
-#		self.height = height
-#		self.location = EarthLocation.from_geodetic(lon = self.longitude*u.degree, lat= self.latitude*u.degree, height=self.height*u.meter)
-#		self.dome = SkyCoord(az=self.az*u.degree,
-#				     alt=self.alt*u.degree, 
-#				     frame=AltAz(obstime=self.time, location=self.location))
-
 	@stringdecorator
 	def get_string(self):
 		"""
