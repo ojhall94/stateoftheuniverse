@@ -5,7 +5,6 @@ import timezonefinder
 from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 from stateoftheuniverse.widgets.utils import stringdecorator
 
-
 # TIMEZONE = pytz.timezone('Europe/London')
 
 EPHEM_BODIES = [
@@ -24,10 +23,10 @@ EPHEM_BODIES = [
 class EphemBodies(WidgetPrototype):
 
     def __init__(
-        self,
-        longitude: float,
-        latitude: float,
-        datetime,
+            self,
+            longitude: float,
+            latitude: float,
+            datetime,
     ):
         super().__init__(longitude, latitude, datetime)
 
@@ -65,12 +64,12 @@ class EphemBodies(WidgetPrototype):
     @stringdecorator
     def get_string(self):
         return (
-            f'Data computed for {dt_minutes(self.local_datetime)} in timezone {self.timezone}, '
-            f'latitude {self.latitude}, longitude {self.longitude}\n\n' +
-            f'\n'.join(
-                self.body_summary(name, v[0], v[1])
-                for name, v in self.data.items()
-            )
+                f'Data computed for {dt_minutes(self.local_datetime)} in timezone {self.timezone}, '
+                f'latitude {self.latitude}, longitude {self.longitude}\n\n' +
+                f'\n'.join(
+                    self.body_summary(name, v[0], v[1])
+                    for name, v in self.data.items()
+                )
         )
 
     def body_summary(self, name, rising, setting):

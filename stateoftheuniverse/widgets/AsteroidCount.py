@@ -7,6 +7,7 @@ Get the current number of asteroids we have discovered.
 # -----------------------------------------------------------------------------
 from astropy.utils.exceptions import AstropyDeprecationWarning
 import warnings
+
 warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 
 from astroquery.mpc import MPCClass
@@ -173,11 +174,11 @@ class AsteroidCount(WidgetPrototype):
 
             if 'large' in self.data.keys():
                 string += f'Of those, there are {self.data["large"]} ' \
-                    'near-Earth asteroids larger than 1 km wide.\n'
+                          'near-Earth asteroids larger than 1 km wide.\n'
 
             if 'hazard' in self.data.keys():
-                string += f'Currently, there are {self.data["hazard"]} '\
-                    'near-Earth asteroids that are classified as\n' \
-                    'potentially hazardous.\n'
+                string += f'Currently, there are {self.data["hazard"]} ' \
+                          'near-Earth asteroids that are classified as\n' \
+                          'potentially hazardous.\n'
 
         return string

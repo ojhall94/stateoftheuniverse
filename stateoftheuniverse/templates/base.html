@@ -6,48 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
 </head>
-
-<style>
-body {
-background-image: url("../background.jpg")
-}
-
-.container {
-text-align: center;
-}
-
-ul {
-width: 450px;           /* change it to whatever you like */
-position: relative;
-text-align:center;
-/* these should be probably already set up by `reset.css` */ 
-list-style-type: none;
-margin: 0;
-padding: 0;
-display: inline-block;
-}
-
-ul:after {
-position: absolute;
-top: 0;
-left: 48%;
-margin-left: 1px;    
-}
-
-li {
-text-align: center;
-width: 48%;
-float: left;
-margin-bottom: -1px;
-display: inline-block;
-}
-
-li:nth-child(even) {
-margin-left: -1px;
-}
-</style>
 
 <body>
 <div class="container">
@@ -56,15 +17,47 @@ margin-left: -1px;
 			<h1>StateoftheUniverse</h1>
 		</center>
 		<div>
-			<h2>Tonight's Constellations</h2>
 			{% if dictionary.consts %}
-				<ul>
-					{% for const in dictionary.consts %}
-					<li> {{ const }} </li>
-					{% endfor %}
-				</ul>
+			<h2>{{ dictionary.consts.name }}</h2>
+			<ul>
+				{% for const in dictionary.consts.data %}
+				<li> {{ const }} </li>
+				{% endfor %}
+			</ul>
 			{% endif %}
-			<h2>
+		</div>
+		<div style="padding-bottom: 20px;">
+			{% if dictionary.astrobdays %}
+			<h2>{{ dictionary.astrobdays.name }}</h2>
+			<table id="t01">
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Wiki</th>
+					<th>Birth Date</th>
+					<th>Death Date</th>
+				</tr>
+				{% for astro in dictionary.astrobdays.data %}
+				<tr>
+					<th>{{ astro.name }}</th>
+					<th>{{ astro.description }}</th>
+					<th><a href="{{ astro.wikipedia_url }}">{{ astro.wikipedia_url }}</a></th>
+					<th>{{ astro.birthdate.date() }}</th>
+					<th>{{ astro.deathdate.date()  }}</th>
+				</tr>
+				{% endfor %}
+			</table>
+			{% endif %}
+		</div>
+		<div>
+			{% if dictionary.moon_phase %}
+			<h2>{{ dictionary.moon_phase.name }}</h2>
+			<p>Tonight's Illumination {{ dictionary.moon_phase.data[0]//1 }}%</p>
+			<p>Tonight's phase: {{ dictionary.moon_phase.data[1] }}</p>
+			{% endif %}
+		</div>
+		<div>
+
 		</div>
 	</header>
 </div>

@@ -61,6 +61,7 @@ class AstronomerBirthdays(WidgetPrototype):
                          datetime=datetime)
 
         self.name = 'BIRTHDAY CHILDS FROM ASTRONOMY'
+        self.dict_name = 'astrobdays'
 
     def get_data(self):
         """
@@ -121,6 +122,7 @@ class AstronomerBirthdays(WidgetPrototype):
 
         # Store away the data retrieved by this method
         self.data = data
+        return self.data
 
     @stringdecorator
     def get_string(self) -> str:

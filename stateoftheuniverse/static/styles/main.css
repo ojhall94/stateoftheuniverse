@@ -1,0 +1,59 @@
+body {
+background-image: url("../background.jpg");
+width: 100%;
+}
+
+.container {
+text-align: center;
+}
+table {
+  width:100%;
+}
+table, th, td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+ background-color: #fff;
+}
+table#t01 th {
+  background-color: light grey;
+  color: black;
+}
+
+ul {
+width: 450px;           /* change it to whatever you like */
+position: relative;
+text-align:center;
+/* these should be probably already set up by `reset.css` */
+list-style-type: none;
+margin: 0;
+padding: 0;
+display: inline-block;
+}
+
+ul:after {
+position: absolute;
+top: 0;
+left: 48%;
+margin-left: 1px;
+}
+
+li {
+text-align: center;
+width: 48%;
+float: left;
+margin-bottom: -1px;
+display: inline-block;
+}
+
+li:nth-child(even) {
+margin-left: -1px;
+}
