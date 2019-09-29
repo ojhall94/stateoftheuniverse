@@ -8,43 +8,40 @@ from stateoftheuniverse.widgets import (
     MoonPhaseWidget,
     ConstellationsWidget,
     ExoplanetCount,
-    #    AsteroidCount,
+    AsteroidCount,
     AstronomerBirthdays
 )
 
 
 def main():
-    #    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
     # parser.add_argument('lat', type=float)
     # parser.add_argument('lon', type=float)
     # args = parser.parse_args()
     # lat = args.lat
     # lon = args.lon
-    #    parser.add_argument('place', type=str)
-    #    args = parser.parse_args()
+
+    parser.add_argument('place', type=str)
+    args = parser.parse_args()
 
     geolocator = Nominatim()
-    loc = geolocator.geocode("knoxville")  # args.place)
+    loc = geolocator.geocode(args.place)
     lat = loc.latitude
     lon = loc.longitude
 
     dt = datetime.utcnow()
 
-    data = {}
-
     for widget_class in [
-        #            EphemBodies,
+        EphemBodies,
         MoonPhaseWidget,
         ConstellationsWidget,
-        #            ExoplanetCount,
-        #            AsteroidCount,
+        ExoplanetCount,
+        AsteroidCount,
         AstronomerBirthdays
     ]:
         widget = widget_class(lon, lat, dt)
-        data[widget.dict_name] = {'name': widget.name, 'data': widget.get_data()}
-    #    string += widget.get_string()
-    #    print(widget.get_string())
-    return data
+        widget.get_data()
+        print(widget.get_string())
 
 
 if __name__ == '__main__':

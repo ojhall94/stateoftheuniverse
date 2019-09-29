@@ -9,14 +9,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
 </head>
-
+<div class="titlebar">
+	<h1>StateoftheUniverse</h1>
+</div>
 <body>
 <div class="container">
 	<header>
-		<center>
-			<h1>StateoftheUniverse</h1>
-		</center>
-		<div>
+		<div class="widget">
 			{% if dictionary.consts %}
 			<h2>{{ dictionary.consts.name }}</h2>
 			<ul>
@@ -26,37 +25,39 @@
 			</ul>
 			{% endif %}
 		</div>
-		<div style="padding-bottom: 20px;">
+		<div class="widget">
 			{% if dictionary.astrobdays %}
 			<h2>{{ dictionary.astrobdays.name }}</h2>
 			<table id="t01">
 				<tr>
 					<th>Name</th>
 					<th>Description</th>
-					<th>Wiki</th>
 					<th>Birth Date</th>
 					<th>Death Date</th>
 				</tr>
 				{% for astro in dictionary.astrobdays.data %}
 				<tr>
 					<th>{{ astro.name }}</th>
-					<th>{{ astro.description }}</th>
-					<th><a href="{{ astro.wikipedia_url }}">{{ astro.wikipedia_url }}</a></th>
+					<th><a href="{{ astro.wikipedia_url }}">{{ astro.description }}</a></th>
 					<th>{{ astro.birthdate.date() }}</th>
-					<th>{{ astro.deathdate.date()  }}</th>
+					{% if astro.deathdate  %}
+					<th>{{ astro.deathdate.date() }}</th>
+					{% else %}
+					<th>TBD</th>
+					{% endif %}
 				</tr>
 				{% endfor %}
 			</table>
 			{% endif %}
 		</div>
-		<div>
+		<div class="widget">
 			{% if dictionary.moon_phase %}
 			<h2>{{ dictionary.moon_phase.name }}</h2>
 			<p>Tonight's Illumination {{ dictionary.moon_phase.data[0]//1 }}%</p>
 			<p>Tonight's phase: {{ dictionary.moon_phase.data[1] }}</p>
 			{% endif %}
 		</div>
-		<div>
+		<div class="widget">
 
 		</div>
 	</header>
