@@ -10,7 +10,6 @@ import warnings
 
 from datetime import datetime as dt
 from astropy import units as u
-from astroplan import Observer
 from astropy.coordinates import SkyCoord, AltAz, get_constellation, EarthLocation
 from astropy.time import Time
 import numpy as np
@@ -55,7 +54,8 @@ class ConstellationsWidget(WidgetPrototype):
             self.time = Time(self.datetime)
 
         else:
-            self.time = Time(self.datetime)
+            self.time = Time(str(self.datetime)[:10]+' 23:00:00')
+            print(self.time)
 
         self.alt, self.az = np.meshgrid(np.arange(5, 85, 5), np.arange(5, 355, 5))
         self.alt = self.alt.ravel()

@@ -12,7 +12,7 @@
 <div class="titlebar">
 	<h1>StateoftheUniverse</h1>
 </div>
-<body>
+<body style="background-image: url({{ source }});">
 <div class="container">
 	<header>
 		<div class="widget">
@@ -56,6 +56,12 @@
 			<p>Tonight's Illumination {{ dictionary.moon_phase.data[0]//1 }}%</p>
 			<p>Tonight's phase: {{ dictionary.moon_phase.data[1] }}</p>
 			{% endif %}
+			{% if dictionary.moon_phase.data[1] == 'New Moon' %}
+			<img src="{{ url_for('static',filename='ph0.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Full Moon" %}
+			<img src="{{ url_for('static',filename='ph0.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
 		</div>
 		<div class="widget">
 
@@ -63,4 +69,9 @@
 	</header>
 </div>
 </body>
+<div class="footer">
+	<ul>
+		<li><a href="https://github.com/ojhall94/stateoftheuniverse" class="fa fa-github"></a></li>
+	</ul>
+</div>
 </html>

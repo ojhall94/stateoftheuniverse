@@ -1,6 +1,8 @@
 import argparse
 from datetime import datetime
 from flask import Flask, render_template
+import requests
+from bs4 import BeautifulSoup
 
 from geopy.geocoders import Nominatim
 
@@ -13,6 +15,11 @@ from stateoftheuniverse.widgets import (
     AstronomerBirthdays
 )
 
+page = requests.get("https://apod.nasa.gov/apod/astropix.html")
+soup = BeautifulSoup(page.content, 'html.parser')
+
+extention = soup.find_all('img')[0]['src']
+source = f'https://apod.nasa.gov/apod/{extention}'
 
 def get_data():
     #    parser = argparse.ArgumentParser()
@@ -43,7 +50,6 @@ def get_data():
     ]:
         widget = widget_class(lon, lat, dt)
         data[widget.dict_name] = {'name': widget.name, 'data': widget.get_data()}
-        print(data)
     return data
 
 
@@ -53,7 +59,7 @@ data=get_data()
 
 @app.route("/")
 def home():
-    return render_template("base.html", dictionary=data)  # "Hello, World!"
+    return render_template("base.html", dictionary=data, source=source)  # "Hello, World!"
 
 
 if __name__ == "__main__":
