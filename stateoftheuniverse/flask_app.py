@@ -32,7 +32,7 @@ def get_data():
     #    args = parser.parse_args()
 
     geolocator = Nominatim()
-    loc = geolocator.geocode("knoxville")  # args.place)
+    loc = geolocator.geocode("seattle")  # args.place)
     lat = loc.latitude
     lon = loc.longitude
 
@@ -41,7 +41,7 @@ def get_data():
     data = {}
 
     for widget_class in [
-        #            EphemBodies,
+        EphemBodies,
         MoonPhaseWidget,
         ConstellationsWidget,
         #            ExoplanetCount,
@@ -63,4 +63,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)

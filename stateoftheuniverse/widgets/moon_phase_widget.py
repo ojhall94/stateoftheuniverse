@@ -102,9 +102,9 @@ class MoonPhaseWidget(WidgetPrototype):
         """
         waxing = self.get_moon_state()
 
-        if self.illumination <= 0.5:
+        if self.illumination <= 0.1:
             phase = 'New Moon'
-        elif 0.5 < self.illumination < 49.9:
+        elif 0.1 < self.illumination < 49.9:
             phase = 'Waxing Crescent' if waxing else 'Waning Crescent'
         elif 49.9 <= self.illumination <= 50.1:
             phase = 'First Quarter' if waxing else 'Last Quarter'

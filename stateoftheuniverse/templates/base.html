@@ -10,9 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <div class="titlebar">
-	<h1>StateoftheUniverse</h1>
+	<h1>StateoftheUniverse</h1font>
 </div>
-<body style="background-image: url({{ source }});">
+<body> <!-- style="background-image: url({{ source }});"> -->
 <div class="container">
 	<header>
 		<div class="widget">
@@ -23,6 +23,57 @@
 				<li> {{ const }} </li>
 				{% endfor %}
 			</ul>
+			{% endif %}
+		</div>
+
+		<div class="widget" style="margin-top: 200px">
+			{% if dictionary.moon_phase %}
+			<h2 style="padding-bottom: 100px;">{{ dictionary.moon_phase.name }}</h2>
+			<p style="padding-bottom: 100px;">Tonight's Illumination {{ dictionary.moon_phase.data[0]//0.1/10 }}%</p>
+			<p style="padding-bottom: 100px;">Tonight's phase: {{ dictionary.moon_phase.data[1] }}</p>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == 'New Moon' %}
+			<img src="{{ url_for('static',filename='ph0.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Full Moon" %}
+			<img src="{{ url_for('static',filename='ph4.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waxing Crescent" %}
+			<img src="{{ url_for('static',filename='ph1.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waning Crescent" %}
+			<img src="{{ url_for('static',filename='ph7.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waxing Gibbous" %}
+			<img src="{{ url_for('static',filename='ph3.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waning Gibbous" %}
+			<img src="{{ url_for('static',filename='ph5.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "First Quarter" %}
+			<img src="{{ url_for('static',filename='ph2.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Last Quarter" %}
+			<img src="{{ url_for('static',filename='ph6.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+		</div>
+		<div class="widget">
+			{% if dictionary.ephem %}
+			<h2>{{ dictionary.ephem.name }}</h2>
+			<table id="t01">
+				<tr>
+					<th>Name</th>
+					<th>Rising time</th>
+					<th>Setting Time</th>
+				</tr>
+				{% for key, item in dictionary.ephem.data.items() %}
+				<tr>
+					<th>{{ key }}</th>
+					<th>{{ item[0] }}</a></th>
+					<th>{{ item[1] }}</th>
+				</tr>
+				{% endfor %}
+			</table>
 			{% endif %}
 		</div>
 		<div class="widget">
@@ -49,22 +100,6 @@
 				{% endfor %}
 			</table>
 			{% endif %}
-		</div>
-		<div class="widget">
-			{% if dictionary.moon_phase %}
-			<h2>{{ dictionary.moon_phase.name }}</h2>
-			<p>Tonight's Illumination {{ dictionary.moon_phase.data[0]//1 }}%</p>
-			<p>Tonight's phase: {{ dictionary.moon_phase.data[1] }}</p>
-			{% endif %}
-			{% if dictionary.moon_phase.data[1] == 'New Moon' %}
-			<img src="{{ url_for('static',filename='ph0.jpg')}}" style="width: 30vh; height: 30vh;"/>
-			{% endif %}
-			{% if dictionary.moon_phase.data[1] == "Full Moon" %}
-			<img src="{{ url_for('static',filename='ph0.jpg')}}" style="width: 30vh; height: 30vh;"/>
-			{% endif %}
-		</div>
-		<div class="widget">
-
 		</div>
 	</header>
 </div>

@@ -55,7 +55,6 @@ class ConstellationsWidget(WidgetPrototype):
 
         else:
             self.time = Time(str(self.datetime)[:10]+' 23:00:00')
-            print(self.time)
 
         self.alt, self.az = np.meshgrid(np.arange(5, 85, 5), np.arange(5, 355, 5))
         self.alt = self.alt.ravel()

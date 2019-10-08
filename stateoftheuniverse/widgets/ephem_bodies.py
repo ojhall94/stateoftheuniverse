@@ -31,6 +31,7 @@ class EphemBodies(WidgetPrototype):
         super().__init__(longitude, latitude, datetime)
 
         self.name = "Solar System bodies visibility"
+        self.dict_name = "ephem"
 
         self.observer = ephem.Observer()
         # datetime must be in UTC!!!
@@ -53,6 +54,7 @@ class EphemBodies(WidgetPrototype):
         If it's above the horizon - previous rising and next setting.
         """
         self.data = {}
+        self.return_data = {}
         for body in EPHEM_BODIES:
             rising = self.observer.next_rising(body)
             setting = self.observer.next_setting(body)
@@ -60,6 +62,8 @@ class EphemBodies(WidgetPrototype):
                 rising = self.observer.previous_rising(body)
 
             self.data[body.name] = (rising.datetime(), setting.datetime())
+            self.return_data[body.name] = (dt_minutes(rising.datetime().time())[-5:], dt_minutes(setting.datetime().time())[-5:])
+        return self.return_data
 
     @stringdecorator
     def get_string(self):
