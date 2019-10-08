@@ -49,14 +49,14 @@ def stringdecorator(function: Callable) -> Callable:
     def wrapper(*args):
         self = args[0]
         string = ''
-        string += '\n' + 80 * '-' + '\n'
+        string += '<br>' + 80 * '-' + '<br>'
         if hasattr(self, 'name') and self.name is not None:
-            string += self.name.upper().center(80) + '\n'
+            string += self.name.upper().center(80) + '<br>'
         else:
-            string += self.__class__.__name__.upper().center(80) + '\n'
-        string += 80 * '-' + '\n\n'
+            string += self.__class__.__name__.upper().center(80) + '<br>'
+        string += 80 * '-' + '<br><br>'
         string += function(*args)
-        string += '\n' + 80 * '-' + '\n'
+        string += '<br>' + 80 * '-' + '<br>'
         return string
 
     return wrapper

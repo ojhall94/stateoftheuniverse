@@ -1,5 +1,6 @@
 from astropy.utils.exceptions import AstropyDeprecationWarning
 import warnings
+
 warnings.filterwarnings('ignore', category=AstropyDeprecationWarning)
 
 import astroplan
@@ -10,6 +11,7 @@ from typing import Optional
 
 from stateoftheuniverse.widgets.prototypes import WidgetPrototype
 from stateoftheuniverse.widgets.utils import stringdecorator
+
 
 class MoonPhaseWidget(WidgetPrototype):
     """
@@ -22,10 +24,11 @@ class MoonPhaseWidget(WidgetPrototype):
         latitude: the latitude of the user
         datetime: a datetime.datetime object in UTC
     """
+
     def __init__(self,
-                longitude: Optional[float] = None,
-                latitude: Optional[float] = None,
-                datetime: Optional[dt.datetime] = None):
+                 longitude: Optional[float] = None,
+                 latitude: Optional[float] = None,
+                 datetime: Optional[dt.datetime] = None):
 
         if datetime is None:
             self.datetime = dt.datetime.now()
@@ -37,6 +40,7 @@ class MoonPhaseWidget(WidgetPrototype):
                          datetime=datetime)
 
         self.name = 'MOON PHASE INFORMATION'
+        self.dict_name = 'moon_phase'
 
     def get_data(self):
         """
@@ -49,8 +53,10 @@ class MoonPhaseWidget(WidgetPrototype):
             self.illumination = self.get_moon_illumination()
             self.phase = self.get_moon_phase()
             self.access_data = True
+            return [self.illumination, self.phase]
         except:
             self.access_data = False
+            return None
 
     def get_moon_illumination(self) -> float:
         """
@@ -63,7 +69,7 @@ class MoonPhaseWidget(WidgetPrototype):
 
         astropytime = Time(self.datetime)
         illumination = astroplan.moon.moon_illumination(astropytime)
-        return illumination*100.
+        return illumination * 100.
 
     def get_moon_state(self) -> bool:
         """

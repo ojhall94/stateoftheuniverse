@@ -117,7 +117,7 @@ class ExoplanetCount(WidgetPrototype):
 
         # Get the total count of all confirmed planets
         exoplanet_count['total'] = len(confirmed_exoplanets)
-    
+
         # Get count by detection method
         if by_method:
             exoplanet_count['by_method'] = \
@@ -129,7 +129,7 @@ class ExoplanetCount(WidgetPrototype):
 
             # Initialize the sub-dictionary that will hold the counts per class
             exoplanet_count['by_class'] = dict()
-        
+
             # Loop over all confirmed exoplanets and classify them individually
             for i in range(len(confirmed_exoplanets)):
 
@@ -173,7 +173,7 @@ class ExoplanetCount(WidgetPrototype):
                                      self.data['by_method'].values()))
 
             string += f'{"Total number:":<{max_key_length}}' \
-                f'{self.data["total"]:>{max_val_length}}\n'
+                      f'{self.data["total"]:>{max_val_length}}\n'
 
             # Add number for each detection method, sorted descendingly
             string += '\nBy detection method:\n'
@@ -181,7 +181,7 @@ class ExoplanetCount(WidgetPrototype):
                                         key=lambda x: x[1], reverse=True):
                 method = '  ' + method + ':'
                 string += f'{method:<{max_key_length}}' \
-                    f'{count:>{max_val_length}}\n'
+                          f'{count:>{max_val_length}}\n'
 
             # Add number for each planet class, sorted descendingly
             string += '\nBy exoplanet class:\n'
@@ -190,7 +190,7 @@ class ExoplanetCount(WidgetPrototype):
                                               reverse=True):
                 method = '  ' + planet_class + ':'
                 string += f'{method:<{max_key_length}}' \
-                    f'{count:>{max_val_length}}\n'
+                          f'{count:>{max_val_length}}\n'
 
         # Otherwise, return a default message that something went wrong
         else:

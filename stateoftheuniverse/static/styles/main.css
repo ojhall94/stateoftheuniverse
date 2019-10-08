@@ -1,0 +1,107 @@
+body {
+font-size: 20px;
+color: white;
+background-image: url("./background.jpg");
+width: 100%;
+height: 100%;
+
+margin-top: 10vh;
+
+/* Create the parallax scrolling effect */
+background-position: top;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.container {
+text-align: center;
+}
+
+.widget {
+height: 90vh;
+padding-bottom: 30px;
+padding-top: 30px;
+}
+
+table {
+  width:100%;
+}
+table, th, td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+table#t01 tr:nth-child(even) {
+  background-color: #0c298a;
+}
+
+table#t01 tr:nth-child(odd) {
+ background-color: #1b3ba6;
+}
+
+table#t01 th {
+  background-color: none;
+  color: white;
+}
+
+ul {
+width: 450px;           /* change it to whatever you like */
+position: relative;
+text-align: center;
+top: 0;
+/* these should be probably already set up by `reset.css` */
+list-style-type: none;
+display: inline-block;
+}
+
+ul:after {
+position: relative;
+top: 0;
+left: 48%;
+margin-left: 1px;
+}
+
+li {
+text-align: center;
+width: 48%;
+float: left;
+margin-bottom: -1px;
+display: inline-block;
+}
+
+li:nth-child(even) {
+margin-left: -1px;
+}
+
+a {
+color: #8909;
+}
+
+.titlebar {
+  color: red;
+  text-align: center;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  height: 10vh;
+  z-index: 1;
+}
+
+.footer {
+font-size: 30px;
+background-color: #333;
+height: 5vh;
+width: 100%;
+overflow: hidden;
+}
+
+.footer ul {
+margin: 0px;
+padding-left: 0px;
+}

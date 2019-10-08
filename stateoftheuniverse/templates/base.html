@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>StateoftheUniverse</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+</head>
+<div class="titlebar">
+	<h1>StateoftheUniverse</h1font>
+</div>
+<body> <!-- style="background-image: url({{ source }});"> -->
+<div class="container">
+	<header>
+		<div class="widget">
+			{% if dictionary.consts %}
+			<h2>{{ dictionary.consts.name }}</h2>
+			<ul>
+				{% for const in dictionary.consts.data %}
+				<li> {{ const }} </li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+
+		<div class="widget" style="margin-top: 200px">
+			{% if dictionary.moon_phase %}
+			<h2 style="padding-bottom: 100px;">{{ dictionary.moon_phase.name }}</h2>
+			<p style="padding-bottom: 100px;">Tonight's Illumination {{ dictionary.moon_phase.data[0]//0.1/10 }}%</p>
+			<p style="padding-bottom: 100px;">Tonight's phase: {{ dictionary.moon_phase.data[1] }}</p>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == 'New Moon' %}
+			<img src="{{ url_for('static',filename='ph0.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Full Moon" %}
+			<img src="{{ url_for('static',filename='ph4.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waxing Crescent" %}
+			<img src="{{ url_for('static',filename='ph1.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waning Crescent" %}
+			<img src="{{ url_for('static',filename='ph7.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waxing Gibbous" %}
+			<img src="{{ url_for('static',filename='ph3.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Waning Gibbous" %}
+			<img src="{{ url_for('static',filename='ph5.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "First Quarter" %}
+			<img src="{{ url_for('static',filename='ph2.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+			{% if dictionary.moon_phase.data[1] == "Last Quarter" %}
+			<img src="{{ url_for('static',filename='ph6.jpg')}}" style="width: 30vh; height: 30vh;"/>
+			{% endif %}
+		</div>
+		<div class="widget">
+			{% if dictionary.ephem %}
+			<h2>{{ dictionary.ephem.name }}</h2>
+			<table id="t01">
+				<tr>
+					<th>Name</th>
+					<th>Rising time</th>
+					<th>Setting Time</th>
+				</tr>
+				{% for key, item in dictionary.ephem.data.items() %}
+				<tr>
+					<th>{{ key }}</th>
+					<th>{{ item[0] }}</a></th>
+					<th>{{ item[1] }}</th>
+				</tr>
+				{% endfor %}
+			</table>
+			{% endif %}
+		</div>
+		<div class="widget">
+			{% if dictionary.astrobdays %}
+			<h2>{{ dictionary.astrobdays.name }}</h2>
+			<table id="t01">
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Birth Date</th>
+					<th>Death Date</th>
+				</tr>
+				{% for astro in dictionary.astrobdays.data %}
+				<tr>
+					<th>{{ astro.name }}</th>
+					<th><a href="{{ astro.wikipedia_url }}">{{ astro.description }}</a></th>
+					<th>{{ astro.birthdate.date() }}</th>
+					{% if astro.deathdate  %}
+					<th>{{ astro.deathdate.date() }}</th>
+					{% else %}
+					<th>TBD</th>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</table>
+			{% endif %}
+		</div>
+	</header>
+</div>
+</body>
+<div class="footer">
+	<ul>
+		<li><a href="https://github.com/ojhall94/stateoftheuniverse" class="fa fa-github"></a></li>
+	</ul>
+</div>
+</html>
